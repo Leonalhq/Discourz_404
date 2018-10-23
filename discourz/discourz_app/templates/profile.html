@@ -42,7 +42,7 @@
     <div class="navibar">
       
             <a class="navibar-left" href="#" onclick="toggleNav2()"><i class="fa fa-bars"></i> Menu</a>
-            <a class="navibar-center" href="#"><img src='logo/logo.png' width="130" height="22"></a>
+            <a class="navibar-center" href="#"><img src="{% static 'logo/logo.png'%}" width="130" height="22"></a>
         <span class="navibar-login">
             <a href="signup.html"><i class="fa fa-user-plus"></i> Sign up</a>
             <span></span>
@@ -75,7 +75,6 @@
                             <hr>
                             <h3><strong>Bio</strong></h3>
                             <p>{{ bio }}</p>
-                            <p>{{ img.url }}</p>
                             <hr>
                             <h3><strong>Location</strong></h3>
                             <p>Earth</p>
@@ -423,7 +422,7 @@
             </div>
         </div>    
     </div>
-    <script src="profile.js"></script>
+    <script src="{% static 'js/profile.js' %}"></script>
   </body>
 
 </html>

@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+<title>Sign up</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<link rel="stylesheet" href="{%static 'css/signup.css' %}">
+<script type="text/javascript" src="{%static 'css/signup.css' %}"></script>
+</head>
+
+<body>
+<div class="container contact-form" enctype="multipart/form-data">
+            <div class="contact-image">
+                <img src="{%static 'logo/logo_blackdiscourz.png' %}" alt="rocket_contact"/>
+            </div>
+            <form method="post" enctype="multipart/form-data">
+				{% csrf_token %}
+                <h3>Sign up</h3>
+               <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <input id="txtName" class="form-control" placeholder="Your Username *" {{ form.username }} 
+                        </div>
+                        <div class="form-group">
+                            <input id="txtEmail" class="form-control" placeholder="Your Email *" {{ form.email }} 
+                        </div>
+						<div class="form-group">
+                            <button onclick="document.getElementById('profile_img').click();" class="btn btn-login float-right" >Upload Profile Image</button>
+                        </div>
+                        <div class="form-group">
+                            <input id="profile_img" style="display:none;"  {{ form.profile_img }} 
+                        </div>
+                        <div class="form-group">
+                            <button type="submit" class="btn btn-login float-right" >Sign Up</button>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <input id="txtPassword" class="form-control" placeholder="Password *" {{ form.password1}} 
+                        </div>
+                        <div class="form-group">
+                            <input id="txtPassword2" class="form-control" placeholder="Confirm Password *" {{ form.password2 }} 
+                        </div>
+                        <div class="form-group">
+                         <textarea id="txtBio" class="form-control" placeholder="About Me*" {{ form.userBio }} 
+                        </div>
+                    </div>
+                </div>
+            </form>
+</div>
+</body>
+</html>

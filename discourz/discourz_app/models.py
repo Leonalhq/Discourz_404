@@ -1,16 +1,26 @@
 from django.db import models
+from django.contrib.auth.models import User
+from django.db.models.signals import post_save
+from django.dispatch import receiver
 
 def user_directory_path(instance, filename):
     # file will be uploaded to MEDIA_ROOT/user_<id>/<filename>
-    return 'user_{0}/{1}'.format(instance.username, filename)
+    return 'user_{0}/{1}'.format(instance.user.username, filename)
 
 # Create your models here.
 class Account(models.Model):
-    username = models.CharField(max_length=20, primary_key=True)
-    password = models.CharField(max_length=20)
-    email = models.EmailField()
-    img = models.ImageField(upload_to=user_directory_path)
-    bio = models.TextField(max_length=500)
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    img = models.ImageField(upload_to=user_directory_path, )
+    bio = models.TextField(max_length=2000)
 
     def __str__(self):
-        return self.username
+        return self.user.username
+
+@receiver(post_save, sender=User)
+def create_user_profile(sender, instance, created, **kwargs):
+    if created:
+        Account.objects.create(user=instance)
+
+@receiver(post_save, sender=User)
+def save_user_profile(sender, instance, **kwargs):
+    instance.account.save()
