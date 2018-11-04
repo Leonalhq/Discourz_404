@@ -1,0 +1,18 @@
+.content-box {
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
+.topic-row {
+  padding-top: 20px;
+}
+
+.topic-img {
+  border-radius: 50%;
+  
+}
+
+.topic_img {
+  width: 100px;
+  height: 70px;
+}

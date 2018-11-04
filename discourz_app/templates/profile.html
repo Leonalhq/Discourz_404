@@ -1,0 +1,495 @@
+﻿{% extends "generic.html" %}
+
+{% load static %}
+{% block css %}
+
+<link rel="stylesheet" href="{% static 'css/profile.css' %}">
+{% endblock %}
+
+
+{% block js %}
+<script src="{% static 'js/profile.js' %}"></script>
+{% endblock %}
+
+{% block content %}
+
+{% block title_outer %}
+<title>{% block title %}{{username}}{% endblock %}</title>
+{% endblock %}
+
+<div class="content">
+
+    <div class="row">
+        <div class="col-md-12 text-center ">
+            <div class="panel panel-default">
+                <div class="userprofile social ">
+                    <div class="userpic"> <img src=" {{img.url}}" style=" width: 100%; height: 100%;" alt="" class="userpicimg">
+                    </div>
+                    <h3 class="username">{{username}}</h3>
+                    <p>{{email}}</p>
+                    <div class="socials tex-center"> <a href="" class="btn btn-circle btn-primary ">
+                            <i class="fa fa-facebook"></i></a> <a href="" class="btn btn-circle btn-danger ">
+                            <i class="fa fa-google-plus"></i></a> <a href="" class="btn btn-circle btn-info ">
+                            <i class="fa fa-twitter"></i></a> <a href="" class="btn btn-circle btn-warning "><i class="fa fa-envelope"></i></a>
+                    </div>
+                </div>
+                <div class="col-md-12 border-top border-bottom">
+                    <ul class="nav nav-pills pull-left countlist" role="tablist">
+                        <li role="presentation">
+                            <div class="text-center">
+                                <i class="fa fa-trophy fa-2x"></i>
+                                <h3 class="timer count-title count-number" data-to="100" data-speed="1500"></h3>
+                                <small>Won</small>
+                            </div>
+                        </li>
+                        <li role="presentation">
+                            <div class="text-center">
+                                <i class="fa fa-frown-o fa-2x"></i>
+                                <h3 class="timer count-title count-number" data-to="100" data-speed="1500"></h3>
+                                <small>Lost</small>
+                            </div>
+                        </li>
+                        <li role="presentation">
+                            <div class="text-center">
+                                <i class="fa fa-users fa-2x"></i>
+                                <h3 class="timer count-title count-number" data-to="100" data-speed="1500"></h3>
+                                <small>Discussion</small>
+                            </div>
+                        </li>
+                        <li role="presentation">
+                            <div class="text-center">
+                                <i class="fa fa-bar-chart fa-2x"></i>
+                                <h3 class="timer count-title count-number" data-to={{num_own_polls}} data-speed="1500"></h3>
+                                <small>Polls</small>
+                            </div>
+                        </li>
+                    </ul>
+                    <div class="w3-container">
+                        <a href="#edit_profile" seq="{% url 'edit_profile' username %}" class="external_link fa fa-edit btn btn-primary followbtn">Edit
+                            profile</a>
+                    </div>
+
+                </div>
+                <div class="clearfix"></div>
+            </div>
+        </div>
+        <!-- /.col-md-12 -->
+        <div class="col-md-4 col-sm-12 pull-right">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h1 class="page-header small">Personal Details</h1>
+                    <p class="page-subtitle small">{{bio}}</p>
+                </div>
+
+            </div>
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h1 class="page-header small">Worked with many domain</h1>
+                    <p class="page-subtitle small">Like to work fr different business</p>
+                </div>
+                <div class="col-md-12">
+                    <ul class="list-group">
+                        <li class="list-group-item"><span class="fa fa-male"></span> Worked with 1000+ people</li>
+                        <li class="list-group-item"><span class="fa fa-institution"></span> 60+ offices</li>
+                        <li class="list-group-item"><span class="fa fa-user"></span> 50000+ satify customers</li>
+                        <li class="list-group-item"><span class="fa fa-clock-o"></span> Work hours many and many still
+                            counting</li>
+                        <li class="list-group-item"><span class="fa fa-heart"></span> Customer satisfaction for servics</li>
+                    </ul>
+                </div>
+                <div class="clearfix"></div>
+            </div>
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h1 class="page-header small">What others are saying </h1>
+                    <p class="page-subtitle small">Express your self, Express to other</p>
+                </div>
+                <div class="col-md-12">
+                    <div class="media">
+                        <div class="media-left"> <a href="javascript:void(0)"> <img src="https://bootdey.com/img/Content/avatar/avatar1.png"
+                                    alt="" class="media-object"> </a> </div>
+                        <div class="media-body">
+                            <h4 class="media-heading">Lucky Sans</h4>
+                            Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin
+                            commodo. Cras purus odio.
+                        </div>
+                    </div>
+                    <div class="media">
+                        <div class="media-left"> <a href="javascript:void(0)">
+                                <img src="https://bootdey.com/img/Content/avatar/avatar1.png" alt="" class="media-object">
+                            </a> </div>
+                        <div class="media-body">
+                            <h4 class="media-heading">John Doe</h4>
+                            Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin
+                            commodo. Cras purus odio.
+                        </div>
+                    </div>
+                </div>
+                <div class="clearfix"></div>
+            </div>
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h1 class="page-header small">Recently Connected</h1>
+                    <p class="page-subtitle small">You have recemtly connected with 34 friends</p>
+                </div>
+                <div class="col-md-12">
+                    <div class="memberblock"> <a href="" class="member"> <img src="https://bootdey.com/img/Content/avatar/avatar2.png"
+                                alt="">
+                            <div class="memmbername">Ajay Sriram</div>
+                        </a> <a href="" class="member"> <img src="https://bootdey.com/img/Content/avatar/avatar1.png"
+                                alt="">
+                            <div class="memmbername">Rajesh Sriram</div>
+                        </a> <a href="" class="member"> <img src="https://bootdey.com/img/Content/avatar/avatar1.png"
+                                alt="">
+                            <div class="memmbername">Manish Sriram</div>
+                        </a> <a href="" class="member"> <img src="https://bootdey.com/img/Content/avatar/avatar1.png"
+                                alt="">
+                            <div class="memmbername">Chandra Amin</div>
+                        </a> <a href="" class="member"> <img src="https://bootdey.com/img/Content/avatar/avatar1.png"
+                                alt="">
+                            <div class="memmbername">John Sriram</div>
+                        </a> <a href="" class="member"> <img src="https://bootdey.com/img/Content/avatar/avatar1.png"
+                                alt="">
+                            <div class="memmbername">Lincoln Sriram</div>
+                        </a> </div>
+                </div>
+                <div class="clearfix"></div>
+            </div>
+        </div>
+        <div class="col-md-8 col-sm-12 pull-left posttimeline">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <div class="status-upload nopaddingbtm">
+                        <form>
+                            <textarea class="form-control" placeholder="What are you doing right now?"></textarea>
+                            <br>
+                            <ul class="nav nav-pills pull-left ">
+                                <li><a title="" data-toggle="tooltip" data-placement="bottom" data-original-title="Audio"><i
+                                            class="glyphicon glyphicon-bullhorn"></i></a></li>
+                                <li><a title="" data-toggle="tooltip" data-placement="bottom" data-original-title="Video"><i
+                                            class=" glyphicon glyphicon-facetime-video"></i></a></li>
+                                <li><a title="" data-toggle="tooltip" data-placement="bottom" data-original-title="Picture"><i
+                                            class="glyphicon glyphicon-picture"></i></a></li>
+                            </ul>
+                            <button type="submit" class="btn btn-success pull-right"> Share</button>
+                        </form>
+                    </div>
+                    <!-- Status Upload  -->
+                </div>
+            </div>
+            {% for uuid,title,img,owner,num_voter in polls %}
+            <div class="panel panel-default">
+                <div class="btn-group pull-right postbtn">
+                    <button type="button" class="dotbtn dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                        <span class="dots"></span> </button>
+                    <ul class="dropdown-menu pull-right" role="menu">
+                        <li><a href="#poll" seq="{% url 'poll' uuid %}" class="external_link" style="text-decoration:none;">More<br></a></li>
+                        <li><a href="javascript:void(0)">Report</a></li>
+                    </ul>
+                </div>
+
+                <div class="col-md-12">
+                    <div class="media">
+                        <div class="media-left"> <a href="javascript:void(0)"> <img src="{{ img.url }}" alt="" class="media-object">
+                            </a> </div>
+                        <div class="media-body">
+                            <h4 class="media-heading"><a href="#poll" seq="{% url 'poll' uuid %}" class="external_link"
+                                    style="text-decoration:none;">{{title}}<br></a>
+                                <small><i class="fa fa-clock-o"></i> Yesterday, 2:00 am</small> </h4>
+                            <p>Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante
+                                sollicitudin
+                                commodo. Cras pklkklurus odio. </p>
+                            <ul class="nav nav-pills pull-left ">
+                                <li><a href="" title=""><i class="glyphicon glyphicon-thumbs-up"></i>
+                                        {{num_voter}} voters</a></li>
+                                <li><a href="" title=""><i class=" glyphicon glyphicon-comment"></i> 25</a></li>
+                                <li><a href="" title=""><i class="glyphicon glyphicon-share-alt"></i> 15</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+            <div class="panel panel-default">
+                <div class="btn-group pull-right postbtn">
+                    <button type="button" class="dotbtn dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                        <span class="dots"></span> </button>
+                    <ul class="dropdown-menu pull-right" role="menu">
+                        <li><a href="javascript:void(0)">Hide this</a></li>
+                        <li><a href="javascript:void(0)">Report</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-12">
+                    <div class="media">
+                        <div class="media-left"> <a href="javascript:void(0)"> <img src="https://bootdey.com/img/Content/avatar/avatar1.png"
+                                    alt="" class="media-object"> </a> </div>
+                        <div class="media-body">
+                            <h4 class="media-heading"> Lucky Sans<br>
+                                <small><i class="fa fa-clock-o"></i> Yesterday, 2:00 am</small> </h4>
+                            <p>Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante
+                                sollicitudin
+                                commodo. Cras purus odio. </p>
+                            <ul class="nav nav-pills pull-left ">
+                                <li><a href="" title=""><i class="glyphicon glyphicon-thumbs-up"></i> 2015</a></li>
+                                <li><a href="" title=""><i class=" glyphicon glyphicon-comment"></i> 25</a></li>
+                                <li><a href="" title=""><i class="glyphicon glyphicon-share-alt"></i> 15</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12 border-top">
+                    <div class="status-upload">
+                        <form>
+                            <label>Comment</label>
+                            <textarea class="form-control" placeholder="Comment here"></textarea>
+                            <br>
+                            <ul class="nav nav-pills pull-left ">
+                                <li><a title=""><i class="glyphicon glyphicon-bullhorn"></i></a></li>
+                                <li><a title=""><i class=" glyphicon glyphicon-facetime-video"></i></a></li>
+                                <li><a title=""><i class="glyphicon glyphicon-picture"></i></a></li>
+                            </ul>
+                            <button type="submit" class="btn btn-success pull-right"> Comment</button>
+                        </form>
+                    </div>
+                    <!-- Status Upload  -->
+
+                </div>
+            </div>
+            <div class="panel panel-default">
+                <div class="btn-group pull-right postbtn">
+                    <button type="button" class="dotbtn dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                        <span class="dots"></span> </button>
+                    <ul class="dropdown-menu pull-right" role="menu">
+                        <li><a href="javascript:void(0)">Hide this</a></li>
+                        <li><a href="javascript:void(0)">Report</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-12">
+                    <div class="media">
+                        <div class="media-left"> <a href="javascript:void(0)"> <img src="https://bootdey.com/img/Content/avatar/avatar1.png"
+                                    alt="" class="media-object"> </a> </div>
+                        <div class="media-body">
+                            <h4 class="media-heading"> Lucky Sans<br>
+                                <small><i class="fa fa-clock-o"></i> Yesterday, 2:00 am</small> </h4>
+                            <p>Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante
+                                sollicitudin
+                                commodo. Cras purus odio. </p>
+                            <ul class="nav nav-pills pull-left ">
+                                <li><a href="" title=""><i class="glyphicon glyphicon-thumbs-up"></i> 2015</a></li>
+                                <li><a href="" title=""><i class=" glyphicon glyphicon-comment"></i> 25</a></li>
+                                <li><a href="" title=""><i class="glyphicon glyphicon-share-alt"></i> 15</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12 commentsblock border-top">
+                    <div class="media">
+                        <div class="media-left"> <a href="javascript:void(0)"> <img alt="64x64" src="https://bootdey.com/img/Content/avatar/avatar1.png"
+                                    class="media-object"> </a> </div>
+                        <div class="media-body">
+                            <h4 class="media-heading">Astha Smith</h4>
+                            <p>Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante
+                                sollicitudin
+                                commodo. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce
+                                condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.
+                            </p>
+                            <div class="media">
+                                <div class="media-left"> <a href="javascript:void(0)"> <img alt="64x64" src="https://bootdey.com/img/Content/avatar/avatar1.png"
+                                            class="media-object"> </a> </div>
+                                <div class="media-body">
+                                    <h4 class="media-heading">Nested Lucky Sans</h4>
+                                    <p>Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante
+                                        sollicitudin commodo. Cras purus odio, vestibulum in vulputate at, tempus
+                                        viverra
+                                        turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia
+                                        congue
+                                        felis in faucibus.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="panel panel-default">
+                <div class="btn-group pull-right postbtn">
+                    <button type="button" class="dotbtn dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                        <span class="dots"></span> </button>
+                    <ul class="dropdown-menu pull-right" role="menu">
+                        <li><a href="javascript:void(0)">Hide this</a></li>
+                        <li><a href="javascript:void(0)">Report</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-12">
+                    <div class="media">
+                        <div class="media-left"> <a href="javascript:void(0)"> <img src="https://bootdey.com/img/Content/avatar/avatar1.png"
+                                    alt="" class="media-object"> </a> </div>
+                        <div class="media-body">
+                            <h4 class="media-heading"> Lucky Sans<br>
+                                <small><i class="fa fa-clock-o"></i> Yesterday, 2:00 am</small> </h4>
+                            <p>Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante
+                                sollicitudin
+                                commodo. Cras purus odio. </p>
+                            <ul class="nav nav-pills pull-left ">
+                                <li><a href="" title=""><i class="glyphicon glyphicon-thumbs-up"></i> 2015</a></li>
+                                <li><a href="" title=""><i class=" glyphicon glyphicon-comment"></i> 25</a></li>
+                                <li><a href="" title=""><i class="glyphicon glyphicon-share-alt"></i> 15</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="panel panel-default">
+                <div class="btn-group pull-right postbtn">
+                    <button type="button" class="dotbtn dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                        <span class="dots"></span> </button>
+                    <ul class="dropdown-menu pull-right" role="menu">
+                        <li><a href="javascript:void(0)">Hide this</a></li>
+                        <li><a href="javascript:void(0)">Report</a></li>
+                    </ul>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+
+{% endblock %}
+
+<!-- <div style="padding-top:50px;"> </div>
+    <div class="col-lg-3 col-md-3 hidden-sm hidden-xs">
+        <div class="panel panel-default">
+            <div class="panel-body">
+                <div class="media">
+                    <div>
+                        <img class="thumbnail img-responsive" src="{{ img.url }}" width="300px" height="300px">
+                    </div>
+                    <div class="media-body">
+                        <hr>
+                        <h3><strong>Bio</strong></h3>
+                        <p>{{ bio }}</p>
+                        <p>{{num_poll}}</p>
+                        <hr>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="col-lg-9 col-md-9 col-sm-12 col-xs-12">
+
+        <div class="panel panel-default">
+            <div class="panel-body">
+                <span>
+                    <h1 class="panel-title pull-left" style="font-size:30px;">{{ username }} <small>{{ email }}</small>
+                        <a href="#" class="btn btn-link" style="text-decoration:none;"><i class="fa fa-fw fa-edit"
+                                aria-hidden="true"></i> Edit profile</a>
+                    </h1>
+                </span>
+                <br><br>
+                <i class="fa fa-tags" aria-hidden="true"></i> <a href="/tags/diaspora" class="tag">#diaspora</a> <a
+                    href="/tags/hashtag" class="tag">#hashtag</a> <a href="/tags/caturday" class="tag">#caturday</a>
+
+                <br><br>
+                <div class="row text-center">
+                    <div class="col-md-2 text-center">
+                        <i class="fa fa-trophy fa-2x"></i>
+                        <h2 class="timer count-title count-number" data-to="100" data-speed="1500"></h2>
+                        <p class="count-text ">Won</p>
+                    </div>
+                    <div class="col-md-2 text-center">
+                        <i class="fa fa-frown-o fa-2x"></i>
+                        <h2 class="timer count-title count-number" data-to="100" data-speed="1500"></h2>
+                        <p class="count-text ">Lost</p>
+                    </div>
+                    <div class="col-md-2 text-center">
+                        <i class="fa fa-comments-o fa-2x"></i>
+                        <h2 class="timer count-title count-number" data-to="100" data-speed="1500"></h2>
+                        <p class="count-text ">Chat</p>
+                    </div>
+                    <div class="col-md-2 text-center">
+                        <i class="fa fa-users fa-2x"></i>
+                        <h2 class="timer count-title count-number" data-to="100" data-speed="1500"></h2>
+                        <p class="count-text ">Discussion</p>
+                    </div>
+                    <div class="col-md-2 text-center">
+                        <i class="fa fa-bar-chart fa-2x"></i>
+                        <h2 class="timer count-title count-number" data-to={{num_own_polls}} data-speed="1500"></h2>
+                        <p class="count-text ">Polls</p>
+                    </div>
+                </div>
+                <hr>
+
+                <div>
+                    <div class="pull-right btn-group-xs">
+                        <a class="btn btn-default btn-xs"><i class="fa fa-files-o" aria-hidden="true"></i> Create new
+                            poll</a>
+                        <a class="btn btn-default btn-xs"><i class="fa fa-retweet" aria-hidden="true"></i> Create new
+                            discussion</a>
+                    </div>
+                    <div class="pull-left">
+                        <p class="text-muted" style="margin-left:5px;"><i class="fa fa-globe" aria-hidden="true"></i>
+                            Public</p>
+                    </div>
+                    <br>
+                </div>
+            </div>
+        </div>
+        <hr>
+        {% for uuid,title,img,owner in polls %}
+        <div class="panel panel-default">
+            <div class="panel-body">
+                <div class="pull-left">
+                    <a href="#">
+                        <img class="media-object img-circle" src="{{ img.url }}" width="50px" height="50px" style="margin-right:8px; margin-top:-5px;">
+                    </a>
+                </div>
+                <h4><a href="#poll" seq="{% url 'poll' uuid %}" class="external_link" style="text-decoration:none;"><strong>{{title}}</strong></a>
+                    – <small><small><a href="#" style="text-decoration:none; color:grey;"><i><i class="fa fa-clock-o"
+                                        aria-hidden="true"></i>
+                                    42 minutes ago</i></a></small></small></h4>
+                <span>
+                    <div class="navbar-right">
+                        <div class="dropdown">
+                            <button class="btn btn-link btn-xs dropdown-toggle" type="button" id="dd1" data-toggle="dropdown"
+                                aria-haspopup="true" aria-expanded="true">
+                                <i class="fa fa-cog" aria-hidden="true"></i>
+                                <span class="caret"></span>
+                            </button>
+                            <ul class="dropdown-menu" aria-labelledby="dd1" style="float: right;">
+                                <li><a href="#"><i class="fa fa-fw fa-exclamation-triangle" aria-hidden="true"></i>
+                                        Report</a></li>
+                                <li><a href="#"><i class="fa fa-fw fa-ban" aria-hidden="true"></i> Ignore</a></li>
+                                <li><a href="#"><i class="fa fa-fw fa-bell" aria-hidden="true"></i> Enable
+                                        notifications for this post</a></li>
+                                <li><a href="#"><i class="fa fa-fw fa-eye-slash" aria-hidden="true"></i> Hide</a></li>
+                                <li role="separator" class="divider"></li>
+                                <li><a href="#"><i class="fa fa-fw fa-trash" aria-hidden="true"></i> Delete</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </span>
+                <hr>
+                <div class="post-content">
+                    <p>Simple post content example.</p>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur vel gravida metus, non
+                        ultrices sapien. Morbi odio metus, dapibus non nibh id amet.</p>
+                </div>
+                <hr>
+                <div>
+                    <div class="pull-right btn-group-xs">
+                        <a class="btn btn-default btn-xs"><i class="fa fa-heart" aria-hidden="true"></i> Like</a>
+                        <a class="btn btn-default btn-xs"><i class="fa fa-retweet" aria-hidden="true"></i> Reshare</a>
+                        <a class="btn btn-default btn-xs"><i class="fa fa-comment" aria-hidden="true"></i> Comment</a>
+                    </div>
+                    <div class="pull-left">
+                        <p class="text-muted" style="margin-left:5px;"><i class="fa fa-globe" aria-hidden="true"></i>
+                            Public</p>
+                    </div>
+                    <br>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div> -->

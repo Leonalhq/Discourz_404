@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>Login</title>
+
+
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+<!-- jQuery library -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+<!-- Latest compiled JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+
+<link rel="stylesheet" href="{%static 'css/login.css' %}">
+
+
+</head>
+
+<body>
+<section class="login-block">
+  <div class="container">
+  <div class="row">
+    <div class="col-md-4 login-sec">
+      <h2 class="text-center">Login Now</h2>
+      <form method="post" novalidate>
+		    {% csrf_token %}
+        <div class="form-group">
+          <label class="text-uppercase">{{ form.username.label_tag }}</label>
+          {{ form.username }}
+        </div>
+        <div class="form-group">
+          <label class="text-uppercase">{{ form.password.label_tag }}</label>
+          {{ form.password }}
+        </div>
+		
+        <div class="form-check">
+          <label class="form-check-label">
+            <input type="checkbox" class="form-check-input">
+            <small>Remember Me</small> </label>
+            <p><b>New to Discourz? <a target="_self" href="../registration" target="_blank">SIGN UP</a></b></p>
+          <button type="submit" class="btn btn-login float-right">Submit</button>
+        </div>
+      </form>
+    </div>
+    <div class="col-md-8 banner-sec">
+      <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+        <ol class="carousel-indicators">
+          <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
+          <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
+          <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
+        </ol>
+        <div class="carousel-inner" role="listbox">
+                  <div class="item active">
+                    <img src="{%static 'img/img/logo discourz_blackBG.png' %}" alt="Image" class="img-carousel">
+                    <div class="carousel-caption">
+                      <h3>Hot Topic 1</h3>
+                      <p>blah blah blah</p>
+                    </div>      
+                  </div>
+          
+                  <div class="item">
+                    <img src="{%static 'img/img/IMG_0236.jpg' %}" alt="Image" class="img-carousel">
+                    <div class="carousel-caption">
+                      <h3>Hot Topic 2</h3>
+                      <p>blah blah blah</p>
+                    </div>      
+                  </div>
+
+                  <div class="item">
+                      <img src="{%static 'img/img/IMG_2059.jpg' %}" class="img-carousel">
+                      <div class="carousel-caption">
+                        <h3>Hot Topic 3</h3>
+                        <p>blah blah blah</p>
+                      </div>      
+                    </div>
+                </div>
+      </div>
+    </div>
+  </div>
+</section>
+</body>
+</html>

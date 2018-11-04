@@ -1,0 +1,275 @@
+﻿{% extends "generic.html" %}
+
+{% load static %}
+{% block css %}
+
+<link rel="stylesheet" href="{% static 'css/edit_profile.css' %}">
+{% endblock %}
+
+
+{% block js %}
+<script src="{% static 'js/edit_profile.js' %}"></script>
+{% endblock %}
+
+{% block content %}
+
+{% block title_outer %}
+<title>{% block title %}Edit {{username}}{% endblock %}</title>
+{% endblock %}
+
+<div class="content">
+    <div class="col-lg-9 col-md-9 col-sm-12 col-xs-12">
+        <div class="panel panel-default">
+            <div class="panel-body">
+                <h1 class="panel-title pull-left" style="font-size:30px;">Basic Info</h1>
+            </div>
+        </div>
+	<form method="post" enctype="multipart/form-data">
+		{% csrf_token %}
+        <div class="panel panel-default">
+            <div class="panel-body">
+                <h3 class="panel-title pull-left">Your Name</h3>
+                <br><br>
+					<div class="form-group">
+                    First Name:<br/><br/>
+                    {{ form.firstName }}
+					</div>
+					<div class="form-group">
+                    Last Name:<br/><br/>
+                    {{ form.lastName }}
+					</div>
+					<div class="form-group">
+                    Username:<br/><br/>
+                    {{ form.username}}
+					</div>
+            </div>
+        </div>
+        <div class="panel panel-default">
+            <div class="panel-body">
+                <h3 class="panel-title pull-left">Your Email Address</h3>
+                <br><br>
+                    {{ form.email}}
+            </div>
+        </div>
+		{{ form.profile_img }}
+        <div class="panel panel-default">
+            <div class="panel-body">
+                <h3 class="panel-title pull-left">Your photo</h3>
+                <br><br>
+                <div align="center">
+                    <div class="col-lg-12 col-md-12">
+                        <img id="blah" src="{{img.url}}" alt="{{img}}" width="300" height="300" />
+						<input name="img_upload" style="display:none;" id = "img_input" type="file" onchange="document.getElementById('blah').src = window.URL.createObjectURL(this.files[0])">
+                    </div>
+                    <div class="col-lg-12 col-md-12">
+                        <button type="button" onclick="document.getElementById('profile_img').click();" class="btn btn-primary"><i class="fa fa-upload" aria-hidden="true"></i> Upload a new
+                            profile photo!</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="panel panel-default">
+            <div class="panel-body">
+                <h3 class="panel-title pull-left">My extended profile</h3>
+                <br><br>
+                <p>Visibility of your extended profile:</p>
+                <br><br>
+                    <div class="form-group">
+                    Your Bio:<br/><br/>
+                    {{ form.userBio }}
+					</div>
+                <br><br>
+            </div>
+        </div>
+        <hr>
+        <div class="panel panel-default">
+            <div class="panel-body">
+                <h3 class="panel-title pull-left">Profile settings</h3>
+                <br><br>
+                <h4>Search</h4>
+                <div class="well checkbox">
+                    <label class="checkbox-inline" for="profile_searchable"><input type="checkbox" name="profile[searchable]"
+                            id="profile_searchable" value="true" checked="checked">
+                        Allow for people to search for you within diaspora*
+                    </label>
+                </div>
+                <br>
+                <h4>NSFW</h4>
+                <p>NSFW (“not safe for work”) is diaspora*’s self-governing community standard for content which may
+                    not be
+                    suitable to view while at work. If you plan to share such material frequently, please check this
+                    option
+                    so that everything you share will be hidden from people’s streams unless they choose to view them.</p>
+                <div class="well checkbox">
+                    <label class="checkbox-inline" for="profile_nsfw"><input type="checkbox" name="profile[nsfw]" id="profile_nsfw"
+                            value="true">
+                        Mark everything I share as NSFW
+                    </label>
+                </div>
+                <p class="text-danger"><strong><i class="fa fa-fw fa-exclamation-triangle" aria-hidden="true"></i> If
+                        you
+                        choose not to select this option, please add the #nsfw tag each time you share such material.</strong></p>
+                <button type="button" class="btn btn-default"><i class="fa fa-fw fa-times" aria-hidden="true"></i> Cancel</button>
+				<button class="btn btn-primary"><i class="fa fa-fw fa-check" aria-hidden="true"></i> Update Profile</button>
+            </div>
+			<div class="form-group">
+                {% if form.errors %}
+                    {% for field in form %}
+                        {% for error in field.errors %}
+                        <div class="alert alert-danger">
+                            <strong>{{ error|escape }}</strong>
+                        </div>
+                        {% endfor %}
+                    {% endfor %}
+                    {% for error in form.non_field_errors %}
+                    <div class="alert alert-danger">
+                        <strong>{{ error|escape }}</strong>
+                    </div>
+                    {% endfor %}
+                {% endif %}
+            </div>
+        </div>
+	</form>
+    </div>
+
+</div>
+
+{% endblock %}
+
+<!-- <div style="padding-top:50px;"> </div>
+    <div class="col-lg-3 col-md-3 hidden-sm hidden-xs">
+        <div class="panel panel-default">
+            <div class="panel-body">
+                <div class="media">
+                    <div>
+                        <img class="thumbnail img-responsive" src="{{ img.url }}" width="300px" height="300px">
+                    </div>
+                    <div class="media-body">
+                        <hr>
+                        <h3><strong>Bio</strong></h3>
+                        <p>{{ bio }}</p>
+                        <p>{{num_poll}}</p>
+                        <hr>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="col-lg-9 col-md-9 col-sm-12 col-xs-12">
+
+        <div class="panel panel-default">
+            <div class="panel-body">
+                <span>
+                    <h1 class="panel-title pull-left" style="font-size:30px;">{{ username }} <small>{{ email }}</small>
+                        <a href="#" class="btn btn-link" style="text-decoration:none;"><i class="fa fa-fw fa-edit"
+                                aria-hidden="true"></i> Edit profile</a>
+                    </h1>
+                </span>
+                <br><br>
+                <i class="fa fa-tags" aria-hidden="true"></i> <a href="/tags/diaspora" class="tag">#diaspora</a> <a
+                    href="/tags/hashtag" class="tag">#hashtag</a> <a href="/tags/caturday" class="tag">#caturday</a>
+
+                <br><br>
+                <div class="row text-center">
+                    <div class="col-md-2 text-center">
+                        <i class="fa fa-trophy fa-2x"></i>
+                        <h2 class="timer count-title count-number" data-to="100" data-speed="1500"></h2>
+                        <p class="count-text ">Won</p>
+                    </div>
+                    <div class="col-md-2 text-center">
+                        <i class="fa fa-frown-o fa-2x"></i>
+                        <h2 class="timer count-title count-number" data-to="100" data-speed="1500"></h2>
+                        <p class="count-text ">Lost</p>
+                    </div>
+                    <div class="col-md-2 text-center">
+                        <i class="fa fa-comments-o fa-2x"></i>
+                        <h2 class="timer count-title count-number" data-to="100" data-speed="1500"></h2>
+                        <p class="count-text ">Chat</p>
+                    </div>
+                    <div class="col-md-2 text-center">
+                        <i class="fa fa-users fa-2x"></i>
+                        <h2 class="timer count-title count-number" data-to="100" data-speed="1500"></h2>
+                        <p class="count-text ">Discussion</p>
+                    </div>
+                    <div class="col-md-2 text-center">
+                        <i class="fa fa-bar-chart fa-2x"></i>
+                        <h2 class="timer count-title count-number" data-to={{num_own_polls}} data-speed="1500"></h2>
+                        <p class="count-text ">Polls</p>
+                    </div>
+                </div>
+                <hr>
+
+                <div>
+                    <div class="pull-right btn-group-xs">
+                        <a class="btn btn-default btn-xs"><i class="fa fa-files-o" aria-hidden="true"></i> Create new
+                            poll</a>
+                        <a class="btn btn-default btn-xs"><i class="fa fa-retweet" aria-hidden="true"></i> Create new
+                            discussion</a>
+                    </div>
+                    <div class="pull-left">
+                        <p class="text-muted" style="margin-left:5px;"><i class="fa fa-globe" aria-hidden="true"></i>
+                            Public</p>
+                    </div>
+                    <br>
+                </div>
+            </div>
+        </div>
+        <hr>
+        {% for uuid,title,img,owner in polls %}
+        <div class="panel panel-default">
+            <div class="panel-body">
+                <div class="pull-left">
+                    <a href="#">
+                        <img class="media-object img-circle" src="{{ img.url }}" width="50px" height="50px" style="margin-right:8px; margin-top:-5px;">
+                    </a>
+                </div>
+                <h4><a href="#poll" seq="{% url 'poll' uuid %}" class="external_link" style="text-decoration:none;"><strong>{{title}}</strong></a>
+                    – <small><small><a href="#" style="text-decoration:none; color:grey;"><i><i class="fa fa-clock-o"
+                                        aria-hidden="true"></i>
+                                    42 minutes ago</i></a></small></small></h4>
+                <span>
+                    <div class="navbar-right">
+                        <div class="dropdown">
+                            <button class="btn btn-link btn-xs dropdown-toggle" type="button" id="dd1" data-toggle="dropdown"
+                                aria-haspopup="true" aria-expanded="true">
+                                <i class="fa fa-cog" aria-hidden="true"></i>
+                                <span class="caret"></span>
+                            </button>
+                            <ul class="dropdown-menu" aria-labelledby="dd1" style="float: right;">
+                                <li><a href="#"><i class="fa fa-fw fa-exclamation-triangle" aria-hidden="true"></i>
+                                        Report</a></li>
+                                <li><a href="#"><i class="fa fa-fw fa-ban" aria-hidden="true"></i> Ignore</a></li>
+                                <li><a href="#"><i class="fa fa-fw fa-bell" aria-hidden="true"></i> Enable
+                                        notifications for this post</a></li>
+                                <li><a href="#"><i class="fa fa-fw fa-eye-slash" aria-hidden="true"></i> Hide</a></li>
+                                <li role="separator" class="divider"></li>
+                                <li><a href="#"><i class="fa fa-fw fa-trash" aria-hidden="true"></i> Delete</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </span>
+                <hr>
+                <div class="post-content">
+                    <p>Simple post content example.</p>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur vel gravida metus, non
+                        ultrices sapien. Morbi odio metus, dapibus non nibh id amet.</p>
+                </div>
+                <hr>
+                <div>
+                    <div class="pull-right btn-group-xs">
+                        <a class="btn btn-default btn-xs"><i class="fa fa-heart" aria-hidden="true"></i> Like</a>
+                        <a class="btn btn-default btn-xs"><i class="fa fa-retweet" aria-hidden="true"></i> Reshare</a>
+                        <a class="btn btn-default btn-xs"><i class="fa fa-comment" aria-hidden="true"></i> Comment</a>
+                    </div>
+                    <div class="pull-left">
+                        <p class="text-muted" style="margin-left:5px;"><i class="fa fa-globe" aria-hidden="true"></i>
+                            Public</p>
+                    </div>
+                    <br>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div> -->

@@ -1,0 +1,132 @@
+    {% extends "generic.html" %}
+
+    {% block content %}
+    <div class="content">
+
+        <div class="row top-content">
+            <div class="col-sm-8">
+              <div id="myCarousel" class="carousel slide" data-ride="carousel">
+                <!-- Indicators -->
+                <ol class="carousel-indicators">
+                  {% for uuid in polls2 %}
+                  {% if forloop.counter == 1 %}
+                  <li data-target="#myCarousel" data-slide-to="{{ forloop.counter0 }}" class="active"></li>
+                  {% else %}
+                  <li data-target="#myCarousel" data-slide-to="{{ forloop.counter0 }}"></li>
+                  {% endif %}
+                  {% endfor %}
+                </ol>
+          
+                <!-- Wrapper for slides -->
+                <div class="carousel-inner" role="listbox">
+                  {% for img,title,owner in polls1 %}
+                  {% if forloop.counter == 1 %}
+                  <div class="item active">
+                  {% else %}
+                  <div class="item">
+                  {% endif %}
+                    <img src="{{ img.url }}" alt="Image" class="img-carousel">
+                    <div class="carousel-caption">
+                      <h3>{{ title }}</h3>
+                      <p>by {{ owner }}</p>
+                    </div>      
+                  </div>
+                  {% endfor %}
+                </div>
+          
+                <!-- Left and right controls -->
+                <a class="left carousel-control" href="#myCarousel" role="button" data-slide="prev">
+                  <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+                  <span class="sr-only">Previous</span>
+                </a>
+                <a class="right carousel-control" href="#myCarousel" role="button" data-slide="next">
+                  <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+                  <span class="sr-only">Next</span>
+                </a>
+              </div>
+            </div>
+            <div class="col-sm-4">
+              
+                  <div class="well">
+                      <p><h4>Live Debate</h4></p>
+                    </div>
+                    <div class="list-group current-topic">
+                        <a href="#" class="list-group-item list-group-item-action flex-column align-items-start">
+                          <div class="d-flex w-100 justify-content-between">
+                            <h5 class="mb-1">Topic 1</h5> 
+                          </div>
+                          <div class="Live-debate-avatar-box">
+                              <img src="avatar/man1.png" class="avatar" data-toggle="tooltip" data-placement="bottom" title="Alex Sun"><b>VS&nbsp&nbsp</b>
+                              <img src="avatar/woman1.png" class="avatar" data-toggle="tooltip" data-placement="bottom" title="Amy Lam">
+                          </div>
+                          <small>3 days ago</small>
+                          
+                          
+                        </a>
+                        <a href="#" class="list-group-item list-group-item-action flex-column align-items-start">
+                          <div class="d-flex w-100 justify-content-between">
+                            <h5 class="mb-1">Topic 2</h5>
+                            
+                          </div>
+                          <div class="Live-debate-avatar-box">
+                              <img src="avatar/man1.png" class="avatar" data-toggle="tooltip" data-placement="bottom" title="Alex Sun"><b>VS&nbsp&nbsp</b>
+                              <img src="avatar/woman1.png" class="avatar" data-toggle="tooltip" data-placement="bottom" title="Amy Lam">
+                          </div>
+                          <small>3 days ago</small>
+                        </a>
+                        <a href="#" class="list-group-item list-group-item-action flex-column align-items-start">
+                          <div class="d-flex w-100 justify-content-between">
+                            <h5 class="mb-1">Topic 3</h5>
+                            
+                          </div>
+                          <div class="Live-debate-avatar-box">
+                              <img src="avatar/man1.png" class="avatar" data-toggle="tooltip" data-placement="bottom" title="Alex Sun"><b>VS&nbsp&nbsp</b>
+                              <img src="avatar/woman1.png" class="avatar" data-toggle="tooltip" data-placement="bottom" title="Amy Lam">
+                          </div>
+                          <small>3 days ago</small>
+                        </a>
+                  </div>
+              
+              
+            </div>
+        </div>
+        
+
+      <div class="panel-group">
+        <div class="panel panel-success">
+          <div class="panel-heading"><h4>Dicussion</h4></div>
+          <div class="panel-body">
+            <ul class="list-group">
+              <li class="list-group-item">Topic 1 <span class="badge">12</span></li>
+              <li class="list-group-item">Topic 2 <span class="badge">5</span></li> 
+              <li class="list-group-item">Topic 3 <span class="badge">3</span></li> 
+            </ul>
+          </div>
+        </div>
+        <div class="panel panel-info">
+          <div class="panel-heading"><h4>Debate</h4></div>
+          <div class="panel-body">
+            <ul class="list-group">
+              <li class="list-group-item">Topic 1 <span class="badge">12</span></li>
+              <li class="list-group-item">Topic 2 <span class="badge">5</span></li> 
+              <li class="list-group-item">Topic 3 <span class="badge">3</span></li> 
+            </ul>
+          </div>
+        </div>
+        <div class="panel panel-warning">
+          <div class="panel-heading"><h4>Poll</h4></div>
+          <div class="panel-body">
+            {% for uuid,title,numVotes in polls %}
+            <li class="list-group-item"><a href="{% url 'poll' uuid %}">{{ title }}</a> <span class="badge">{{ numVotes }}</span></li>
+            {% endfor %}
+          </div>
+          <div class="more">
+            <a href="{% url 'poll_home'%}">more</a>
+          </div>
+        </div>
+    
+    </div>
+</div>
+    </div>
+  
+{% endblock %}

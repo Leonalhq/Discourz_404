@@ -1,0 +1,69 @@
+﻿{% extends "generic.html" %}
+
+{% block css %}
+{% load static %}
+<link rel="stylesheet" href="{% static 'css/poll_home.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="content">
+
+  <div class="content-box">
+    <br />
+    <span>
+      <h2>Poll</h2>
+    </span>
+    <span>
+      <a href="{% url 'poll_create' %}" class="btn btn-success btn-sm">
+        <span class="glyphicon glyphicon-plus"></span> create a new poll</a>
+    </span>
+    <br /><br />
+
+    <ul class="nav nav-tabs">
+      <li class="active"><a data-toggle="tab" href="#home">Most Recent</a></li>
+      <li><a data-toggle="tab" href="#menu1">Most Popular</a></li>
+      <li><a data-toggle="tab" href="#menu2">Most Agree</a></li>
+      <li><a data-toggle="tab" href="#menu3">Most Disagree</a></li>
+    </ul>
+
+    <div class="tab-content">
+
+      <div id="home" class="tab-pane fade in active">
+        <div class="row topic-row">
+          {% for uuid,title,img,owner in polls %}
+          <div class="col-sm-4">
+            <a href="#poll" seq="{% url 'poll' uuid %}" class="external_link">
+              <div class="panel panel-primary">
+                <div class="panel-heading">{{ title }}</div>
+                <div class="panel-body"><img src="{{ img.url }}" class="topic_img" style="width:100%; height: 200px;"
+                    alt="Image"></div>
+                <div class="panel-footer">by {{ owner }}</div>
+              </div>
+            </a>
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+
+
+      <div id="menu1" class="tab-pane fade">
+        <h3>Menu 1</h3>
+        <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+      </div>
+      <div id="menu2" class="tab-pane fade">
+        <h3>Menu 2</h3>
+        <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem
+          aperiam.</p>
+      </div>
+      <div id="menu3" class="tab-pane fade">
+        <h3>Menu 3</h3>
+        <p>Eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.</p>
+      </div>
+    </div>
+
+  </div>
+
+
+</div>
+
+{% endblock %}

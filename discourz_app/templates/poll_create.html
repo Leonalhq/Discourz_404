@@ -1,0 +1,68 @@
+﻿{% extends "generic.html" %}
+{% load static %}
+{% block css %}
+<link rel="stylesheet" href="{% static 'css/poll_create.css' %}">
+{% endblock %}
+
+{% block js %}
+<script src="{% static 'js/poll_create.js' %}"></script>
+{% endblock %}
+
+{% block content %}
+    <div class="content">
+            <div class="poll-header">
+                <h2>Creating a new poll</h2>
+            </div>
+            
+                        
+            <br />
+            <form method="post" enctype="multipart/form-data" nonvalidate>
+            {% csrf_token %}
+            {{ form.non_field_errors }}
+
+            <div class="user-poll-section">
+                <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <strong>Enter title: </strong>{{ form.poll_title.errors }}{{ form.poll_title }}
+                        </div>
+                        <div class="panel-body">
+                                <span>select number of options: </span>
+                                <select id='select' onclick="selectedOptions()">
+                                        {% for i in 'xxxxxxxxxxx' %}
+                                        <option value="{{ forloop.counter|add:'1' }}">{{ forloop.counter|add:'1' }}</option>
+                                        {% endfor %}
+                                </select>
+                            
+                            <hr/>
+                            <div class='op'>option #1: {{ form.poll_op1.errors }}{{ form.poll_op1 }}</div>
+                            <div class='op'>option #2: {{ form.poll_op2.errors }}{{ form.poll_op2 }}</div>
+                            <div class='op'>option #3: {{ form.poll_op3.errors }}{{ form.poll_op3 }}</div>
+                            <div class='op'>option #4: {{ form.poll_op4.errors }}{{ form.poll_op4 }}</div>
+                            <div class='op'>option #5: {{ form.poll_op5.errors }}{{ form.poll_op5 }}</div>
+                            <div class='op'>option #6: {{ form.poll_op6.errors }}{{ form.poll_op6 }}</div>
+                            <div class='op'>option #7: {{ form.poll_op7.errors }}{{ form.poll_op7 }}</div>
+                            <div class='op'>option #8: {{ form.poll_op8.errors }}{{ form.poll_op8 }}</div>
+                            <div class='op'>option #9: {{ form.poll_op9.errors }}{{ form.poll_op9 }}</div>
+                            <div class='op'>option #10: {{ form.poll_op10.errors }}{{ form.poll_op10 }}</div>
+                            <div class='op'>option #11: {{ form.poll_op11.errors }}{{ form.poll_op11 }}</div>
+                            <div class='op'>option #12: {{ form.poll_op12.errors }}{{ form.poll_op12 }}</div>
+                            <hr />
+                            <span>select topic image: </span>
+
+                            <!--<input id="id_image" type="file" class="" name="poll_img">-->
+                            {{  form.poll_img.errors }}{{  form.poll_img }}
+                        
+                        </div>
+                        <div class="panel-footer">
+                                <input class="btn btn-success btn-sm" type="submit" value="Create Poll">
+                            
+                        </div>
+                </div>
+
+            </div>
+            </form>
+    </div>
+ 
+{% endblock %}
+
+
