@@ -79,11 +79,11 @@
         <div class="col-md-4 col-sm-12 pull-right">
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    {% if firstname|length > 0 or lastname|length > 0 %}
-                    <h1 class="page-header small">Name: </h1>
-                    <p class="page-subtitle small">{{firstname}} {{lastname}}</p>
+                    <h1 class="page-header small">Personal Details: </h1>
+					{% if firstname|length > 0 or lastname|length > 0 %}
+                    <p class="page-subtitle small">Name: {{firstname}} {{lastname}}</p>
                     {% endif %}
-                    <h1 class="page-header small">Personal Details</h1>
+                    <h1 class="page-subtitle small">About Me:</h1>
                     <p class="page-subtitle small">{{bio}}</p>   
                 </div>
 
@@ -94,11 +94,9 @@
                 </div>
                 <div class="col-md-12">
                     <ul class="list-group">
-                        <li class="list-group-item"><span class="fa fa-male"></span> Tag1</li>
-                        <li class="list-group-item"><span class="fa fa-institution"></span> Tag2</li>
-                        <li class="list-group-item"><span class="fa fa-user"></span> Tag3</li>
-                        <li class="list-group-item"><span class="fa fa-clock-o"></span> Tag4</li>
-                        <li class="list-group-item"><span class="fa fa-heart"></span> Tag5</li>
+						{% for tag in tagList %}
+                        <li class="list-group-item"><span class="fa fa-heart"></span> {{tag}}</li>
+						{% endfor %}
                     </ul>
                 </div>
                 <div class="clearfix"></div>
@@ -145,7 +143,7 @@
                                     style="text-decoration:none;">{{title}}<br></a>
                                 <small><i class="fa fa-clock-o"></i> {{ date|timesince:now }}</small> </h4>
                             {% if bestOpt %}
-                            <p>The most vote option: </p>
+                            <p>The most voted for option: </p>
                             {% for opt in bestOpt %}
                             <div class="progress">
                                 <div class="progress-bar" role="progressbar" aria-valuenow="60" aria-valuemin="0"
@@ -158,7 +156,7 @@
                             {% endfor %}
                             <!-- code here to list the books -->
                             {% else %}
-                            <p>There are no one voted on the topic.</p>
+                            <p>This poll has no votes yet.</p>
                             {% endif %}
 
                             <ul class="nav nav-pills pull-left ">

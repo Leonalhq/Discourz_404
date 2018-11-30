@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.staticfiles.templatetags.staticfiles import static
 import uuid
+import json
 from datetime import datetime   
 
 from django.contrib.auth.models import User
@@ -26,9 +27,25 @@ class Account(models.Model):
     imgUrl = "static/avatar/man1.png"
     img = models.ImageField(upload_to=user_directory_path, default=imgUrl)
     bio = models.TextField(max_length=500, default='tell us about yourself')
+    tags = models.TextField(max_length=500, default='["General"]')
+    won = models.IntegerField(default=0)
+    lost = models.IntegerField(default=0)
+    debates = models.IntegerField(default=0)
 
     def __str__(self):
         return self.user.username
+    def set_tags(self,x):
+        self.tags = json.dumps(x)
+    def get_tags(self):
+        tags = json.loads(self.tags)
+        i=0
+        myTags=""
+        while(i<len(tags)):
+            myTags+=","+tags[i]
+            i+=1
+        return myTags[1:]
+    def get_tag_list(self):
+        return json.loads(self.tags)
 
 
 @receiver(post_save, sender=User)

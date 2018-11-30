@@ -36,18 +36,11 @@ class SignUpForm(UserCreationForm):
 class EditProfileForm(forms.Form):
     firstName = forms.CharField(max_length=50, required=False)
     lastName = forms.CharField(max_length=50, required=False)
-    username = forms.CharField(max_length=50)
-    email = forms.EmailField()
+    username = forms.CharField(max_length=50,required=False,disabled=True)
+    email = forms.EmailField(required=False)
     profile_img = forms.ImageField(required=False)
     userBio = forms.CharField(widget=forms.Textarea(), max_length=1000, required=False)
-    def clean_username(self):
-        username = self.cleaned_data["username"]
-        valid = re.match('^[\w*.+_-]+$', username) is not None #This compares the submited user name against a regular expression conataining
-        if valid==False:                                        #all allowed characters for usernames.
-            raise forms.ValidationError('Username is invalid')
-        if User.objects.filter(username=username).exists():
-            raise forms.ValidationError('Username already taken')
-        return username
+    userTags = forms.CharField(widget=forms.Textarea(), max_length=1000, required=False)
     def clean_email(self):
         email = self.cleaned_data["email"]
         if User.objects.filter(email=email).exists():
@@ -61,6 +54,7 @@ class EditProfileForm(forms.Form):
         self.fields['profile_img'].widget.attrs.update({'style':'display:none;', 'id':'profile_img', 'onchange':"document.getElementById('blah').src = window.URL.createObjectURL(this.files[0])"})
         self.fields['email'].widget.attrs.update({'class': 'form-control', 'placeholder': 'Your Email'})        
         self.fields['userBio'].widget.attrs.update({'class': 'form-control', 'placeholder': 'Tell us about yourself'})
+        self.fields['userTags'].widget.attrs.update({'class': 'form-control', 'placeholder': 'Ex: Travelling,Netflix,...'})
     
     class Meta:
         model = User

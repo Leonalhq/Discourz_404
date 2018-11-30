@@ -23,4 +23,9 @@ $(function () { //document ready call
       readURL(this);
   });
 });
+function checkEmail(){
+	if (document.proEdit.email.value == email){
+		document.proEdit.email.value = "";
+	}
+}
 

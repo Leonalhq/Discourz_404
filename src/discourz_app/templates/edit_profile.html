@@ -8,6 +8,7 @@
 
 
 {% block js %}
+<script> var email = "{{email}}"</script>
 <script src="{% static 'js/edit_profile.js' %}"></script>
 {% endblock %}
 
@@ -24,7 +25,7 @@
                 <h1 class="panel-title pull-left" style="font-size:30px;">Basic Info</h1>
             </div>
         </div>
-        <form method="post" enctype="multipart/form-data">
+        <form name="proEdit" method="post" enctype="multipart/form-data"onsubmit="return checkEmail()">
             {% csrf_token %}
             <div class="panel panel-default">
                 <div class="panel-body">
@@ -78,6 +79,10 @@
                     <div class="form-group">
                         Your Bio:<br /><br />
                         {{ form.userBio }}
+                    </div>
+					<div class="form-group">
+                        Your Intrests:<br /><br />
+                        {{ form.userTags }}
                     </div>
                     <br><br>
                 </div>
