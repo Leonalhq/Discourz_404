@@ -37,7 +37,7 @@
     <div class="user-poll-section">
         <div class="panel panel-default">
             <div class="panel-heading">
-                <strong>By : </strong>{{ owner }} <strong>Tags:  </strong>{{tags}}
+                <strong>By : </strong>{{ owner }} <strong>Tags:  </strong>{% for tag in tags %} <a onclick="return searchTag('{{tag}}')" href="">#{{tag}}</a>{% endfor %}
             </div>
             <div class="panel-body">
                 {% if voted %}

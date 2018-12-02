@@ -32,7 +32,9 @@
                         <div class="media-body">
                             <h4 class="media-heading"><a href="#poll" seq="{% url 'poll' result.id %}" class="external_link"
                                     style="text-decoration:none;">{{result.title}}<br></a>
-								<p>{{result.get_tags}}</p>
+									<p>{% for tag in result.get_tag_list %}
+										<a onclick="return searchTag('{{tag}}')" href="">#{{tag}}</a>
+										{% endfor %}</p>
                                 <small><i class="fa fa-clock-o"></i>{{ result.date}}</small> </h4>
                         </div>
                     </div>

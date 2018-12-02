@@ -2,6 +2,7 @@ from django.shortcuts import render
 from discourz_app.models import Account, PollTopic, Debates, PastDebates, Chat, Comment
 from discourz_app.forms import CreatePoll, CreateDebate, whichVote, CommentForm
 from django.views.generic import TemplateView
+from django.db.models import Q
 
 from django.http import HttpResponseRedirect
 from django.shortcuts import redirect
@@ -197,7 +198,7 @@ def poll(request, uuid):
         'voted': voted,
         'CommentList':CommentList,
         'form':CommentForm(),
-        'tags': topic.get_tags(),
+        'tags': topic.get_tag_list(),
     }
 
     if request.method == 'POST':

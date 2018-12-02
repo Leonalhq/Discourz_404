@@ -90,3 +90,11 @@ function passingToggleStatus () {
         window.location.href = current + "?cal=" + text;
     });
 }
+//Call this function to make clicking something result in a search Ex. onclick="searchTag({{tag}})"
+function searchTag(tag){
+    var searchbar = document.getElementById("searchbox");
+    searchbar.value = tag;
+    //alert(document.getElementById("SearchBar").name)
+    document.getElementById("SearchBar").submit();
+    return false;   
+}
