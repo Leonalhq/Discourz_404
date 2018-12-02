@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+<<<<<<< HEAD
 
 <head>
 
@@ -42,6 +43,59 @@
 
   {% block topbar %}
   <div class="navibar">
+=======
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+
+    {% block title %}
+    <title>Discourz</title>
+    {% endblock %}
+
+    <!-- Latest compiled and minified CSS -->
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+    />
+
+    <!-- jQuery library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+    <!-- Latest compiled JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+    {% load static %}
+    <!-- Load an icon library -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+    />
+
+    <link rel="stylesheet" href="{% static 'css/index.css' %}" />
+    {% block css %}{% endblock %}
+
+    <link rel="stylesheet" href="font-awesome/css/font-awesome.min.css" />
+
+    <link
+      href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet"
+    />
+
+    <script src="{% static 'js/index.js' %}"></script>
+    <script src="{% static 'js/all.js' %}"></script>
+    {% block js %}{% endblock %}
+  </head>
+
+  <body id="page-top">
+    {% block topbar %}
+    <div class="navibar">
+>>>>>>> 88c19064c93fef8d36e738bdd726944b9dc08d93
       <a class="navibar-left" href="#" onclick="toggleNav2()"
         ><i class="fa fa-bars"></i> Menu</a
       >
@@ -49,7 +103,11 @@
         ><img src="{% static 'img/logo/logo.png' %}" width="110" height="30"
       /></a>
       <span class="navibar-login">
+<<<<<<< HEAD
         <form method="GET" id="SearchBar" action="{% url 'search' %}">
+=======
+        <form method="GET" action="{% url 'search' %}">
+>>>>>>> 88c19064c93fef8d36e738bdd726944b9dc08d93
           <input
             class="search-box"
             id="searchbox"
@@ -82,6 +140,7 @@
         </form>
       </span>
     </div>
+<<<<<<< HEAD
   {% endblock %}
 
   {% block sidebar %}
@@ -104,3 +163,31 @@
 </body>
 
 </html>
+=======
+    {% endblock %} {% block sidebar %}
+    <div class="sidebar" id="mySidenav">
+      <a href="#home" seq="{% url 'index' %}" class="external_link"
+        ><i class="fa fa-fw fa-home"></i
+        ><span class="sidebar-text"> Home</span></a
+      >
+      <a href="#discussion" seq="{% url 'discussion' %}" class="external_link"
+        ><i class="fa fa-users"></i
+        ><span class="sidebar-text"> Dicussion</span></a
+      >
+      <a href="#debate" seq="{% url 'debate' %}" class="external_link"
+        ><i class="fa fa-comments-o"></i
+        ><span class="sidebar-text"> Debate</span></a
+      >
+      <a href="#poll" seq="{% url 'poll_home' %}" class="external_link"
+        ><i class="fa fa-bar-chart"></i
+        ><span class="sidebar-text"> Poll</span></a
+      >
+      <a href="#about_us" seq="{% url 'aboutus' %}" class="external_link"
+        ><i class="fa fa-fw fa-envelope"></i
+        ><span class="sidebar-text"> About Us</span></a
+      >
+    </div>
+    {% endblock %} {% block content %}{% endblock %}
+  </body>
+</html>
+>>>>>>> 88c19064c93fef8d36e738bdd726944b9dc08d93
