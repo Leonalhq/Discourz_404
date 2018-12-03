@@ -31,7 +31,7 @@
                             </a></div>
                         <div class="media-body">
                             <h4 class="media-heading"><a href="#poll" seq="{% url 'poll' result.id %}" class="external_link"
-                                    style="text-decoration:none;">{{result.title}}<br></a>
+                                    style="text-decoration:none;" title="Poll">{{result.title}}<br></a>
 									<p>{% for tag in result.get_tag_list %}
 										<a onclick="return searchTag('{{tag}}')" href="">#{{tag}}</a>
 										{% endfor %}</p>
