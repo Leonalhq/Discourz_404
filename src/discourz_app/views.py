@@ -302,7 +302,7 @@ def debate(request):
         pastUser2Position.append(pastDebate.user2Position)
         pastUser1Votes.append(pastDebate.user1votes)
         pastUser2Votes.append(pastDebate.user2votes)
-        pastCategories.append(pastDebate.get_tags())
+        pastCategories.append(pastDebate.get_tag_list())
         pastTopics.append(pastDebate.topic)
     
     viewPast = zip(pastUuids, pastUser1, pastUser2, pastUser1Position, pastUser2Position, pastUser1Votes, pastUser2Votes, pastCategories, pastTopics)
@@ -399,7 +399,7 @@ def pastChat(request, uuid):
             'user2': user2,
             'user1votes': user1votes,
             'user2votes': user2votes,
-            'category': category,
+            'tagList': pastDebate.get_tag_list(),
             'uuid': uuid
         }
         return render(request, 'pastChatTemplate.html', context=context)

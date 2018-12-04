@@ -155,9 +155,11 @@ class PastDebates(models.Model):
     tags = models.CharField(max_length=100, default='["General"]')
     topic = models.CharField(max_length=500, default='')
     date = models.DateField(default=datetime.now)
-
+    
     def __str__(self):
         return self.topic
+    def get_tag_list(self):
+        return json.loads(self.tags)
 
 class Chat(models.Model):
     username = models.CharField(max_length=100, default='myusername')

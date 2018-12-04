@@ -45,15 +45,14 @@
                   
                   <div id="menu1" class="tab-pane fade">
                     <div class="row topic-row">
-                            {% for uuid, user1, user2, user1position, user2position, user1votes, user2votes, category, topic in viewPast %}
+                            {% for uuid, user1, user2, user1position, user2position, user1votes, user2votes, tagList, topic in viewPast %}
                                 <div class="col-sm-4">
                                 <a href="#debateChat" seq="{% url 'pastChat' uuid %}" class="external_link">
                                     <div class="panel panel-primary">
-                                        <div class="panel-heading">{{ topic }}</div>
-                                        <div class="panel-body">Category: {{ category }} <br> {{ user1 }}'s votes: {{ user1votes }} <br> {{ user2 }}'s votes: {{ user2votes }}</div>
+                                        <div class="panel-heading">{{ topic }}</div></a>
+                                        <div class="panel-body">Tags: {% for tag in tagList %} <a onclick="return searchTag('{{tag}}')" href="">#{{tag}}</a> {% endfor %} <br> {{ user1 }}'s votes: {{ user1votes }} <br> {{ user2 }}'s votes: {{ user2votes }}</div>
                                         <div class="panel-footer">{{ user1 }} ({{ user1position }}) vs {{ user2 }} ({{ user2position }})</div>
                                     </div>
-                                </a>
                             </div>
                         {% endfor %}
 
