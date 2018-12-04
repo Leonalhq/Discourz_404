@@ -512,7 +512,8 @@ class SearchView(TemplateView):
     def get(self, request, *args, **kwargs):
         q = request.GET.get('q', '')
         self.results = PollTopic.objects.filter(tags__icontains=q)
+        self.key = q
         return super().get(request, *args, **kwargs)
 
     def get_context_data(self, **kwargs):
-        return super().get_context_data(results=self.results, **kwargs)
+        return super().get_context_data(results=self.results, key = self.key, **kwargs)

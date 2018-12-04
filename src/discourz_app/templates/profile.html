@@ -142,14 +142,14 @@
                             <ul class="nav nav-pills pull-left ">
                                 <li><a onclick="return false" href="" title=""><i class="glyphicon glyphicon-thumbs-up"></i>
                                         {{num_voter}} voters</a></li>
-								<li><a onclick="return ShowHideComments('{{uuid}}')"><i class=" glyphicon glyphicon-comment"></i>{{commentNum}}</a></li>
+								<li><a onclick="return ShowHideComments('{{uuid}}')"><i class=" glyphicon glyphicon-comment"></i> {{commentNum}}</a></li>
                             </ul>
                         </div>
                     </div>
                 </div>
 				<div id="comment{{uuid}}" style="display: none">
 				{% for comment in commentList %}
-				<div class="col-md-8">
+				<!-- <div class="col-md-8">
 					<div class="panel panel-default">
 						<div class="media-body">
 							<img src="{{comment.user.account.img.url}}" style=" width: 8%; height: 8%;">
@@ -157,16 +157,40 @@
 							<p>{{comment.user.username}} at {{comment.date}}</p>
 						</div>
 					</div>
-				</div>
-				{% endfor %}
-				<div>
-				<form method="post" enctype="multipart/form-data">
-					{% csrf_token %}
-					{{form.text}}
-					<input type="text" name="PollId" maxlength="100" class="form-control" required id="id_PollId" value = "{{uuid}}" style="display: none">
-					<button type="submit" class="btn btn-success pull-right"> Share</button>
-				</form>
-				</div>
+                </div> -->
+                <div class="post-content">
+                    <div class="panel-default">
+                        <div class="panel-body">
+                            <div class="pull-left">
+                                <a href="#">
+                                    <img class="media-object img-circle" src="{{comment.user.account.img.url}}" width="35px"
+                                        height="35px" style="margin-right:15px; margin-left: 30px ; margin-top:-5px;">
+                                </a>
+                            </div>
+                            <h4><a href="#" style="text-decoration:none; "><strong>{{comment.user.username}}</strong></a></h4>
+                            <hr>
+                            <div class="post-content" style=" margin-left: 60px ;" >{{comment.text}}
+                                <br><small><small><a href="#" style="text-decoration:none; color:grey;"><i><i class="fa fa-clock-o"
+                                                    aria-hidden="true"></i> {{comment.date}}</i></a></small></small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+                <div class="pull-left">
+                    <a href="#">
+                        <img class="media-object img-circle" src=" {{img.url}}" width="35px" height="35px"
+                            style="margin-left:3px; margin-right:5px;">
+                    </a>
+                </div>
+                <div class="media-body">
+                    <form method="post" enctype="multipart/form-data">{% csrf_token %}{{form.text}}
+                        <input type="text" name="PollId" rows="1" maxlength="100" class="form-control" required id="id_PollId" value="{{uuid}}"
+                            style="display: none"></input>
+                        <button type="submit" class="btn btn-success pull-right"> Share</button>
+                    </form>
+                </div>
+               
             </div>
             {% endfor %}
             <div class="panel panel-default">
