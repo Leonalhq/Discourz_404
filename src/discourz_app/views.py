@@ -2,9 +2,10 @@ from django.shortcuts import render
 from discourz_app.models import Account, PollTopic, Debates, PastDebates, Chat, Comment
 from discourz_app.forms import CreatePoll, CreateDebate, whichVote, CommentForm
 from django.views.generic import TemplateView
-from django.db.models import Q
+from itertools import chain
 
 from django.http import HttpResponseRedirect
+from django.http.response import JsonResponse
 from django.shortcuts import redirect
 from django.utils import timezone
 
@@ -198,7 +199,7 @@ def poll(request, uuid):
         'voted': voted,
         'CommentList':CommentList,
         'form':CommentForm(),
-        'tags': topic.get_tag_list(),
+        'tags': topic.get_tags(),
     }
 
     if request.method == 'POST':
@@ -271,13 +272,12 @@ def debate(request):
 
     for debate in debates:
         uuids.append(debate.id)
-        positions.append(debate.position)
         categories.append(debate.get_tags())
         topics.append(debate.topic)
         initialUsers.append(debate.initial_user)
         isDebateOpen.append(debate.isOpen)
 
-    viewDebates = zip(uuids, positions, categories, topics, initialUsers, isDebateOpen)
+    viewDebates = zip(uuids, categories, topics, initialUsers, isDebateOpen)
 
     context = {
         'viewDebates' : viewDebates
@@ -298,14 +298,12 @@ def debate(request):
         pastUuids.append(pastDebate.id)
         pastUser1.append(pastDebate.user1)
         pastUser2.append(pastDebate.user2)
-        pastUser1Position.append(pastDebate.user1Position)
-        pastUser2Position.append(pastDebate.user2Position)
         pastUser1Votes.append(pastDebate.user1votes)
         pastUser2Votes.append(pastDebate.user2votes)
         pastCategories.append(pastDebate.get_tag_list())
         pastTopics.append(pastDebate.topic)
     
-    viewPast = zip(pastUuids, pastUser1, pastUser2, pastUser1Position, pastUser2Position, pastUser1Votes, pastUser2Votes, pastCategories, pastTopics)
+    viewPast = zip(pastUuids, pastUser1, pastUser2, pastUser1Votes, pastUser2Votes, pastCategories, pastTopics)
 
     context = {
         'viewDebates' : viewDebates,
@@ -314,38 +312,66 @@ def debate(request):
 
     return render(request, 'debate_home.html', context=context)
 
+def joinChat(request, uuid):
+    try:
+        debateTopic = Debates.objects.get(id=uuid) 
+        if debateTopic.other_user != '' or request.user.username == debateTopic.initial_user:
+            return HttpResponseRedirect("/discourz/debate")
+        debateTopic.other_user = request.user.username
+        debateTopic.isOpen = False
+        debateTopic.save()
+    except Debates.DoesNotExist as x:
+        print(x)
+    context = { 'id' : uuid }
+    return render(request, 'joinChat.html', context=context)
+
 
 def debateChat(request, uuid):
-    otherUsername = ''
-    topic = ''
     try:
         debateTopic = Debates.objects.get(id=uuid)
-        otherUsername = debateTopic.initial_user
+        myUser = ''
+        otherUser = ''
+        if request.user.username == debateTopic.initial_user:
+            myUser = debateTopic.initial_user
+            otherUser = debateTopic.other_user
+        else:
+            myUser = debateTopic.other_user
+            otherUser = debateTopic.initial_user
         topic = debateTopic.topic
-    except Debates.DoesNotExist:
-        raise Http404('Topic does not exist')
-
-    context = {
-        'otherUsername': otherUsername,
-        'topic': topic
-    }
-
-    return render(request, 'debate.html', context=context)
+        tagList = debateTopic.get_tag_list()
+        context = {
+            'id' : uuid,
+            'myUser' : myUser,  
+            'otherUsername' : otherUser,
+            'topic' : topic,
+            'tagList':tagList,
+        }
+        return render(request, 'debate.html', context=context)
+    except Debates.DoesNotExist as x:
+        print(x)
+    return HttpResponseRedirect("/debate")
 
 @csrf_exempt #This skips csrf validation. Use csrf_protect to have validationxs
 def debate_create(request):
     if request.method == 'POST':
         debate_form = CreateDebate(request.POST, request.FILES)
         title = debate_form.data['title']
-        DebateTags = (((poll_form.data['category']).lower()).replace(" ","")).split("#")
+        DebateTags = (((debate_form.data['category']).lower()).replace(" ","")).split("#")
         position = debate_form.data['position']
         user1 = request.user.username
-        newDebate = Debates(topic=title, isOpen=True, position=position, initial_user=user1)
+        newDebate = Debates(topic=title, isOpen=True, initial_user=user1)
         newDebate.set_tags(DebateTags)
         newDebate.save()
-        return HttpResponseRedirect("/discourz/debate")
+        uuid = str(newDebate.id)
+        return HttpResponseRedirect("/discourz/waitLobby/" + uuid)
     else:
         return render(request, 'debate_create.html')
+
+def waitLobby(request, id):
+    context = {
+        'id' : id    
+    }
+    return render(request, 'waitLobby.html', context=context)
 
 @csrf_exempt
 def pastChat(request, uuid):
@@ -377,7 +403,7 @@ def pastChat(request, uuid):
             user2 = pastDebate.user2
             user1votes = pastDebate.user1votes
             user2votes = pastDebate.user2votes
-            category = pastDebate.tags 
+            tags = pastDebate.get_tag_list() 
         except PastDebates.DoesNotExist:
             raise Http404('Topic does not exist')
         
@@ -386,22 +412,32 @@ def pastChat(request, uuid):
         usernames = []
         messages = []
 
-        for chat in chatList:
-            usernames.append(chat.username)
-            messages.append(chat.message)
 
-        chats = zip(usernames, messages)
+        commentList = Comment.getDebateComments(pastDebate)
 
         context = {
-            'chats': chats,
             'topic': topic,
             'user1': user1,
             'user2': user2,
             'user1votes': user1votes,
             'user2votes': user2votes,
-            'tagList': pastDebate.get_tag_list(),
-            'uuid': uuid
+            'tags': tags,
+            'uuid': uuid,
+            'firebaseKey':pastDebate.firebaseKey,
+            'CommentList':commentList,
+            'form':CommentForm(),
         }
+
+        if request.method == 'POST':
+            form = CommentForm(request.POST)
+            if form.is_valid():
+                comment = form.cleaned_data['text']
+                PollId = form.cleaned_data['PollId']
+                Debate = (PastDebates.objects.filter(id = uuid))[0]
+                newComment = Comment(text = comment, debate = Debate, user = request.user)
+                newComment.save()
+                return redirect('pastChat',uuid)
+
         return render(request, 'pastChatTemplate.html', context=context)
 
 def getBestOptionPoll(topic):
@@ -511,9 +547,32 @@ class SearchView(TemplateView):
 
     def get(self, request, *args, **kwargs):
         q = request.GET.get('q', '')
-        self.results = PollTopic.objects.filter(tags__icontains=q)
+        pollResults = PollTopic.objects.filter(tags__icontains=q)
+        debateResults = PastDebates.objects.filter(tags__icontains=q)
+        self.results = chain(debateResults, pollResults)
         self.key = q
+        print(debateResults[0].get_type)
         return super().get(request, *args, **kwargs)
 
     def get_context_data(self, **kwargs):
         return super().get_context_data(results=self.results, key = self.key, **kwargs)
+
+def create_past_debate(request):
+    debateId = request.GET.get('id', None)
+    firebaseKey = request.GET.get('firebaseKey', None)
+    closedDebate = Debates.objects.filter(id=debateId)[0]
+    pastDebate = closedDebate.closeDebate(firebaseKey)
+    pastDebate.save()
+    return JsonResponse({'dummyResponse':debateId})
+    
+def room(request, uuid,):
+    debateTopic = Debates.objects.filter(id=uuid)[0]
+    commentList = Comment.getDebateComments(debateTopic)
+    context = {
+        'room_name_json': mark_safe(json.dumps(uuid)),
+        'user':request.user,
+        'debateTopic':debateTopic,
+        'tagList':debateTopic.get_tag_list(),
+        'commentList':commentList,
+    }
+    return render(request, 'chat/room.html', context)

@@ -1,0 +1,11 @@
+.image_ava img {
+  border-radius: 10em !important;
+  width: 150px;
+}
+
+.content {
+  width: 90%;
+  position: relative;
+  margin-top: 45px;
+  padding-top: 20px;
+}

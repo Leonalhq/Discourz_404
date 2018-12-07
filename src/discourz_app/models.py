@@ -91,6 +91,9 @@ class PollTopic(models.Model):
     def get_tag_list(self):
         return json.loads(self.tags)
 
+    def get_type(self):
+        return "PollTopic"
+
 class Debates(models.Model):
     id = models.UUIDField(
         primary_key=True,
@@ -109,10 +112,11 @@ class Debates(models.Model):
     #    ('Latter', 'Latter')
     #)
     # title = models.CharField(max_length=500, default='')
-    position = models.CharField(max_length=100) #, default='Select Position', choices=positionOnTopicOptions)
+    #position = models.CharField(max_length=100) #, default='Select Position', choices=positionOnTopicOptions)
     tags = models.CharField(max_length=100, default='["General"]')
     topic = models.CharField(max_length=500, default='')
     initial_user = models.CharField(max_length=500, default='')
+    other_user = models.CharField(max_length=500, default='')
     date = models.DateField(default=datetime.now)
 
     def __str__(self):
@@ -129,6 +133,11 @@ class Debates(models.Model):
         return myTags[1:]
     def get_tag_list(self):
         return json.loads(self.tags)
+    def closeDebate(self,firebaseKey):
+        closedDebate = PastDebates(id = self.id,user1=self.initial_user,user2=self.other_user,
+        firebaseKey=firebaseKey,user1votes=0,user2votes=0,tags=self.tags,topic=self.topic,date=datetime.now())
+        return closedDebate
+
 
 class PastDebates(models.Model):
     id = models.UUIDField(
@@ -148,19 +157,21 @@ class PastDebates(models.Model):
     #)
     user1 = models.CharField(max_length=500, default='')
     user2 = models.CharField(max_length=500, default='')
-    user1Position = models.CharField(max_length=100) #default='Select Position', choices=positionOnTopicOptions)
-    user2Position = models.CharField(max_length=100) #default='Select Position', choices=positionOnTopicOptions)
+    firebaseKey = models.CharField(max_length=500, default='')
+    #user1Position = models.CharField(max_length=100) #default='Select Position', choices=positionOnTopicOptions)
+    #user2Position = models.CharField(max_length=100) #default='Select Position', choices=positionOnTopicOptions)
     user1votes = models.IntegerField(default=0)
     user2votes = models.IntegerField(default=0)
     tags = models.CharField(max_length=100, default='["General"]')
     topic = models.CharField(max_length=500, default='')
     date = models.DateField(default=datetime.now)
-    
+
     def __str__(self):
         return self.topic
     def get_tag_list(self):
         return json.loads(self.tags)
-
+    def get_type(self):
+        return "PastDebates"
 class Chat(models.Model):
     username = models.CharField(max_length=100, default='myusername')
     message = models.TextField(default='')
@@ -172,8 +183,9 @@ class VotedUsers(models.Model):
 
 class Comment(models.Model):
     text = models.TextField(primary_key=True)
-    Poll = models.ForeignKey(PollTopic,on_delete=models.CASCADE, null=True)
-    user = models.ForeignKey(User,on_delete=models.CASCADE,null=True)
+    Poll = models.ForeignKey(PollTopic,on_delete=models.CASCADE, null=True,blank=True)
+    debate = models.ForeignKey(PastDebates,on_delete=models.CASCADE,null=True,blank=True)
+    user = models.ForeignKey(User,on_delete=models.CASCADE,null=True,)
     date = models.DateTimeField(auto_now_add=True, null=True)
     
     def _str_(self):
@@ -181,4 +193,7 @@ class Comment(models.Model):
     
     def getPollComments(PollObj):
         CommentList = Comment.objects.filter(Poll=PollObj)
+        return CommentList
+    def getDebateComments(Debates):
+        CommentList = Comment.objects.filter(debate=Debates)
         return CommentList

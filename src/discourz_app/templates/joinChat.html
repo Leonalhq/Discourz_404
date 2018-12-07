@@ -1,0 +1,46 @@
+{% extends "generic.html" %}
+{% load static %}
+{% block css %}
+<link rel="stylesheet" href="{% static 'css/poll_create.css' %}">
+{% endblock %}
+
+{% block content %}
+    <div class="content">
+            <div class="poll-header">
+                <h2></h2>
+            </div>
+            <div id='loadingmsg' style='display: none;'>Joining Game</div>
+            <div id='loadingover' style='display: none;'></div>
+
+    </div>
+    <script src="https://www.gstatic.com/firebasejs/5.6.0/firebase.js"></script>
+    <script>
+        document.getElementById('loadingmsg').style.display = 'block';
+        document.getElementById('loadingover').style.display = 'block';
+
+        var config = {
+            apiKey: "AIzaSyA9lbW5XP5p-HIX-DTnHqhFfuVvHIX8a98",
+            authDomain: "discourz-debate.firebaseapp.com",
+            databaseURL: "https://discourz-debate.firebaseio.com",
+            projectId: "discourz-debate",
+            storageBucket: "discourz-debate.appspot.com",
+            messagingSenderId: "850312774074"
+        };
+        firebase.initializeApp(config);
+        var rootRef = firebase.database();
+        var uuid = '';
+        var idKey = '';
+        rootRef.ref('/').orderByChild('uuid').equalTo('{{ id }}').once('value').then((snap) => {
+            var array = Object.keys(snap.val());
+            var obj = snap.val();
+            var idKey = obj[array[0]].refKey;
+            var otherId = obj[array[0]].uuid;
+            rootRef.ref('/' + idKey).set({ uuid: otherId, refKey: idKey, playerJoined: true }).then(() => {
+                window.location.replace('/discourz/debateChat/{{ id }}/');
+            });
+        })
+
+    </script>
+
+ 
+{% endblock %}

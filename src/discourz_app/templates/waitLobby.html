@@ -1,0 +1,47 @@
+{% extends "generic.html" %}
+{% load static %}
+{% block css %}
+<link rel="stylesheet" href="{% static 'css/poll_create.css' %}">
+{% endblock %}
+
+{% block content %}
+    <div class="content">
+            <div class="poll-header">
+                <h2></h2>
+            </div>
+            <div id='loadingmsg' style='display: none;'>We are currently finding you an opponent... This page will automatically redirect when one is found! </div>
+            <div id='loadingover' style='display: none;'></div>
+
+    </div>
+    <script src="https://www.gstatic.com/firebasejs/5.6.0/firebase.js"></script>
+    <script>
+        document.getElementById('loadingmsg').style.display = 'block';
+        document.getElementById('loadingover').style.display = 'block';
+
+        var config = {
+            apiKey: "AIzaSyA9lbW5XP5p-HIX-DTnHqhFfuVvHIX8a98",
+            authDomain: "discourz-debate.firebaseapp.com",
+            databaseURL: "https://discourz-debate.firebaseio.com",
+            projectId: "discourz-debate",
+            storageBucket: "discourz-debate.appspot.com",
+            messagingSenderId: "850312774074"
+        };
+        firebase.initializeApp(config);
+        var rootRef = firebase.database();
+        var pushedRef = rootRef.ref('/').push({ uuid : "{{ id }}", playerJoined : false });
+        pushedRef.then(() => {
+            var secondRef = rootRef.ref('/' + pushedRef.key).set({ uuid: "{{ id }}", playerJoined: false, refKey: pushedRef.key});
+            secondRef.then(() => {
+                rootRef.ref('/' + pushedRef.key + '/playerJoined').on('value', function(snapshot) {
+                    if(snapshot.val()) {
+                        window.location.replace('/discourz/debateChat/{{ id }}/');
+                    }
+                });
+            })
+
+        });
+
+    </script>
+
+ 
+{% endblock %}

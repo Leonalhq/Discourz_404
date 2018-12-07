@@ -14,8 +14,12 @@
       <h2>Poll</h2>
     </span>
     <span>
+      {% if request.user.is_authenticated %}
       <a href="{% url 'poll_create' %}" class="btn btn-success btn-sm">
         <span class="glyphicon glyphicon-plus"></span> create a new poll</a>
+      {% else %}
+      <a href="#" class="btn btn-success btn-sm">Please log in to create a new poll</a>
+      {% endif %}
     </span>
     <br /><br />
 

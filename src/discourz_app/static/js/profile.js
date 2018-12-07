@@ -113,3 +113,7 @@ function ShowHideComments(commentId) {
   }
   return false;
 }
+
+function UpdateComment() {
+  
+}

@@ -80,6 +80,25 @@
   padding: 0px 10px;
   border:1px solid #c1c1c1;
 }
+.right-chat-vote{
+  text-align: center;
+  padding: 15px 30px;
+  width: 100%;
+  background-color: #3A3A3A;
+}
+.right-chat-vote input{
+  width:40%;
+  height:40px;
+  color:rgb(28, 29, 31);
+  border-radius:3px;
+  padding: 0px 10px;
+  border:1px solid #c1c1c1;
+}
+.right-chat-vote p{
+  margin: 0px;
+  color: #61BC71;
+  font-weight: bold;
+}
 .right-chat-textbox a i{
   color:#3A3A3A;
   text-align: center;
@@ -117,7 +136,7 @@
   content: " ";
   position:absolute;
   top:14px;
-  right:15px;
+  right:-15px;
   bottom:150px;
   border:15px solid transparent;
   border-bottom-color:#94C2ED; 

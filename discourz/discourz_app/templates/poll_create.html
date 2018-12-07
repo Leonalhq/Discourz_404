@@ -26,7 +26,7 @@
                             <strong>Enter title: </strong>{{ form.poll_title.errors }}{{ form.poll_title }}
                         </div>
                         <div class="panel-body">
-                                <span>select number of options: </span>
+                                <span>Select number of options: </span>
                                 <select id='select' onclick="selectedOptions()">
                                         {% for i in 'xxxxxxxxxxx' %}
                                         <option value="{{ forloop.counter|add:'1' }}">{{ forloop.counter|add:'1' }}</option>
@@ -47,6 +47,7 @@
                             <div class='op'>option #11: {{ form.poll_op11.errors }}{{ form.poll_op11 }}</div>
                             <div class='op'>option #12: {{ form.poll_op12.errors }}{{ form.poll_op12 }}</div>
                             <hr />
+							<div class="panel-body"> <span>Tags:</span> {{ form.poll_tags }}</div>
                             <span>select topic image: </span>
 
                             <!--<input id="id_image" type="file" class="" name="poll_img">-->

@@ -2,8 +2,8 @@ body {
   font-family: "Roboto", sans-serif;
   font-weight: 400;
   background-color: #f0f3f5;
+  margin-top: 40px;
 }
-
 /*==============================*/
 /*====== siderbar user profile =====*/
 /*==============================*/
@@ -447,58 +447,107 @@ body {
   float: none;
   display: table;
 }
+.box {
+   display: flex;
+   align-items:flex-start;
+}
 
-.progress-bar {
-  text-align: left;
-  white-space: nowrap;
-  white-space: nowrap;
+/* .mainbody {
+  background: #f0f0f0;
+}
+
+.navbar-wrapper {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 20;
+  margin-left: -15px;
+  margin-right: -15px;
+}
+
+.navbar-wrapper .container {
+  padding-left: 0;
+  padding-right: 0;
+}
+.navbar-wrapper .navbar {
+  padding-left: 15px;
+  padding-right: 15px;
+}
+
+.navbar-content {
+  width: 320px;
+  padding: 15px;
+  padding-bottom: 0px;
+}
+.navbar-content:before,
+.navbar-content:after {
+  display: table;
+  content: "";
+  line-height: 0;
+}
+.navbar-nav.navbar-right:last-child {
+  margin-right: 15px !important;
+}
+.navbar-footer {
+  background-color: #ddd;
+}
+.navbar-footer-content {
+  padding: 15px 15px 15px 15px;
+}
+.dropdown-menu {
+  padding: 0px;
   overflow: hidden;
-  text-overflow: ellipsis;
-  cursor: pointer;
 }
 
-.progress-bar > .progress-type {
-  padding-left: 10px;
-}
-
-.progress-meter {
-  min-height: 15px;
-  border-bottom: 2px solid rgb(160, 160, 160);
-}
-
-.progress-meter > .meter {
-  position: relative;
+.brand_network {
+  color: #9d9d9d;
   float: left;
-  min-height: 15px;
-  border-width: 0px;
-  border-style: solid;
-  border-color: rgb(160, 160, 160);
-}
-
-.progress-meter > .meter-left {
-  border-left-width: 2px;
-}
-
-.progress-meter > .meter-right {
-  float: right;
-  border-right-width: 2px;
-}
-
-.progress-meter > .meter-right:last-child {
-  border-left-width: 2px;
-}
-
-.progress-meter > .meter > .meter-text {
   position: absolute;
-  display: inline-block;
-  bottom: -20px;
-  width: 100%;
-  font-weight: 700;
-  font-size: 0.85em;
-  color: rgb(160, 160, 160);
-  text-align: left;
+  left: 70px;
+  top: 30px;
+  font-size: smaller;
 }
 
-.progress-meter > .meter.meter-right > .meter-text {
-  text-align: right;
+.post-content {
+  margin-left: 58px;
 }
+
+.badge-important {
+  margin-top: 3px;
+  margin-left: 25px;
+  position: absolute;
+}
+
+body {
+  background-color: #3a3a3a;
+}
+
+.counter {
+  background-color: #727272;
+  padding: 20px;
+  border-radius: 5px;
+}
+
+.count-title {
+  font-size: 40px;
+  font-weight: normal;
+  margin-top: 10px;
+  margin-bottom: 0;
+  text-align: center;
+}
+
+.count-text {
+  font-size: 13px;
+  font-weight: normal;
+  margin-top: 10px;
+  margin-bottom: 0;
+  text-align: center;
+}
+
+.fa-2x {
+  margin: 0 auto;
+  float: none;
+  display: table;
+}
+ */

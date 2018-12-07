@@ -13,8 +13,7 @@
 {% block content %}
 
     <div class="time-count">
-      Time left
-      <span class="countdown">5:00</span>
+      <button class="fa fa-arrow-right" onclick="endDebate();">End Debate</button>
     </div>
 
     <div class="content">
@@ -23,19 +22,122 @@
                 <img src="avatar/man1.png">
             </div>
             <div class="right-header-detail">
-              <p>{{ topic }}</p>
-              <span>{{ otherUsername }}</span>
+              <p>{{ topic }} Tags: {% for tag in tagList %} <a onclick="return searchTag('{{tag}}')" href="">#{{tag}}</a>{% endfor %} </p>
+              <span>{{ myUser }} vs. {{ otherUsername }}</span>
             </div>
         </div>
           
-          <div class="right-header-contentChat">
-          </div>
-          <div class="right-chat-textbox">
-              <input type="text"><a href="#"><i class="fa fa-arrow-right" aria-hidden="true"></i></a>
-          </div>
-      
-
-      
+        <div class="right-header-contentChat">
+          <ul id="chatLog">
+          </ul>
+      </div>
+          <div class="col-md-12 right-chat-textbox">
+            <input id="chat-message-input" type="text"><a href="#"><i class="fa fa-arrow-right" aria-hidden="true" id="chat-message-submit"></i></a>
+		</div> 
     </div>
+    <script src="https://www.gstatic.com/firebasejs/5.6.0/firebase.js"></script>
+    <script>
+      var config = {
+          apiKey: "AIzaSyA9lbW5XP5p-HIX-DTnHqhFfuVvHIX8a98",
+          authDomain: "discourz-debate.firebaseapp.com",
+          databaseURL: "https://discourz-debate.firebaseio.com",
+          projectId: "discourz-debate",
+          storageBucket: "discourz-debate.appspot.com",
+          messagingSenderId: "850312774074"
+      };
+      firebase.initializeApp(config);
+      var rootRef = firebase.database();
+      var idKey = ''
+      var otherId = ''
+
+      rootRef.ref('/').orderByChild('uuid').equalTo('{{ id }}').once('value', (snap) => {
+            var array = Object.keys(snap.val());
+            var obj = snap.val();
+            idKey = obj[array[0]].refKey;
+            otherId = obj[array[0]].uuid;
+            var userJoined = rootRef.ref("/"+idKey+"/playerJoined");
+      userJoined.onDisconnect().set("false");
+      userJoined.on('value', (debateSnap)=>{
+        if(debateSnap.val()=='false') endDebate();
+      })
+      }).then(() => {
+        rootRef.ref('/' + idKey + '/chats').on('child_added', (snapshot) => {
+        // all records after the last continue to invoke this function
+        //console.log(snapshot.name(), snapshot.val());
+        // get the last inserted key
+        var message = snapshot.val();
+          //alert(snapshot.val());
+          messageArray = seperateMessage(message);
+          var messageItem = document.createElement("li");
+          var messageIcon = document.createElement("i");
+		      var messageNew = document.createElement("p");
+		      var messageBubble = document.createElement("div");
+          var messageSpan = document.createElement("span");
+          messageBubble.appendChild(messageSpan);
+          messageSpan.appendChild(messageIcon);
+          messageBubble.appendChild(document.createElement("br"));
+          messageBubble.appendChild(document.createElement("br"));
+          messageSpan.appendChild(document.createTextNode(messageArray[0]));
+          messageNew.appendChild(document.createTextNode(messageArray[1]));
+          messageBubble.appendChild(messageNew);
+          messageItem.appendChild(messageBubble);
+          if(messageArray[0] == "{{myUser}}") messageBubble.setAttribute("class","rightside-left-chat");
+          else messageBubble.setAttribute("class","rightside-right-chat");
+          messageIcon.setAttribute("class","fa fa-circle");
+          document.querySelector('#chatLog').appendChild(messageItem);
+        });
+
+      });
+
+      document.querySelector('#chat-message-input').focus();
+      document.querySelector('#chat-message-input').onkeyup = function(e) {
+        if (e.keyCode === 13) {  // enter, return
+            document.querySelector('#chat-message-submit').click();
+        }
+      };
+      document.querySelector('#chat-message-submit').onclick = function(e) {
+        sendMsg();
+        var messageInputDom = document.querySelector('#chat-message-input');
+        messageInputDom.value = '';
+    };
+      
+      function seperateMessage(message){
+        for(i =0; i<message.length;i++){
+          if(message[i] == ":"){
+            var username = message.slice(0,i);
+            var content = message.slice(i+1,message.length);
+            var messageArray = [username,content];
+            return messageArray 
+          } 
+        }
+      } 
+
+      function sendMsg() {
+        if (idKey == '') {
+          alert('Please wait a few seconds, we are in the process of connecting you')
+        } else {
+          var text = document.getElementById('chat-message-input').value;
+          console.log('{{ myUser }}'); 
+          rootRef.ref('/' + idKey + '/chats').push("{{ myUser }}: " + text);
+        }
+      }
+      function endDebate() {
+        var userJoined = rootRef.ref("/"+idKey+"/playerJoined");
+        userJoined.once('value', (debateSnap)=>{
+        $.ajax({
+          url: "{% url 'create_past_debate' %}",
+          data: {
+            'id': otherId,
+            'firebaseKey':idKey,
+          },
+          dataType: 'json',
+          success: function (data) {
+            alert("This debate has ended. Thank you for participating.");
+            window.location.replace('/discourz/');
+          }
+        });
+      })
+      }     
+    </script>
     
 {% endblock %}

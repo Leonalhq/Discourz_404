@@ -8,6 +8,7 @@
 
 
 {% block js %}
+<script> var email = "{{email}}"</script>
 <script src="{% static 'js/edit_profile.js' %}"></script>
 {% endblock %}
 
@@ -24,7 +25,7 @@
                 <h1 class="panel-title pull-left" style="font-size:30px;">Basic Info</h1>
             </div>
         </div>
-        <form method="post" enctype="multipart/form-data">
+        <form name="proEdit" method="post" enctype="multipart/form-data"onsubmit="return checkEmail()">
             {% csrf_token %}
             <div class="panel panel-default">
                 <div class="panel-body">
@@ -79,42 +80,17 @@
                         Your Bio:<br /><br />
                         {{ form.userBio }}
                     </div>
+					<div class="form-group">
+                        Your Intrests:<br /><br />
+                        {{ form.userTags }}
+                    </div>
                     <br><br>
                 </div>
             </div>
             <hr>
             <div class="panel panel-default">
                 <div class="panel-body">
-                    <h3 class="panel-title pull-left">Profile settings</h3>
-                    <br><br>
-                    <h4>Search</h4>
-                    <div class="well checkbox">
-                        <label class="checkbox-inline" for="profile_searchable"><input type="checkbox" name="profile[searchable]"
-                                id="profile_searchable" value="true" checked="checked">
-                            Allow for people to search for you within diaspora*
-                        </label>
-                    </div>
-                    <br>
-                    <h4>NSFW</h4>
-                    <p>NSFW (“not safe for work”) is diaspora*’s self-governing community standard for content which
-                        may
-                        not be
-                        suitable to view while at work. If you plan to share such material frequently, please check
-                        this
-                        option
-                        so that everything you share will be hidden from people’s streams unless they choose to view
-                        them.</p>
-                    <div class="well checkbox">
-                        <label class="checkbox-inline" for="profile_nsfw"><input type="checkbox" name="profile[nsfw]"
-                                id="profile_nsfw" value="true">
-                            Mark everything I share as NSFW
-                        </label>
-                    </div>
-                    <p class="text-danger"><strong><i class="fa fa-fw fa-exclamation-triangle" aria-hidden="true"></i>
-                            If
-                            you
-                            choose not to select this option, please add the #nsfw tag each time you share such
-                            material.</strong></p>
+                   
                     <button type="button" class="btn btn-default"><i class="fa fa-fw fa-times" aria-hidden="true"></i>
                         Cancel</button>
                     <button class="btn btn-primary"><i class="fa fa-fw fa-check" aria-hidden="true"></i> Update Profile</button>
@@ -138,7 +114,9 @@
             </div>
         </form>
     </div>
+    </div>
 
 </div>
 
 {% endblock %}
+

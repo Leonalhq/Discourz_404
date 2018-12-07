@@ -1,9 +1,15 @@
 from django.contrib import admin
-from discourz_app.models import Account, PollTopic
+from discourz_app.models import Account, PollTopic, Debates, Chat, PastDebates, VotedUsers, Comment, DebateMessage
 
 # Register your models here.
 admin.site.register(Account)
 admin.site.register(PollTopic)
+admin.site.register(Debates)
+admin.site.register(Chat)
+admin.site.register(PastDebates)
+admin.site.register(VotedUsers)
+admin.site.register(Comment)
+admin.site.register(DebateMessage)
 
 username = "discourz404"
 password = "discourz404"

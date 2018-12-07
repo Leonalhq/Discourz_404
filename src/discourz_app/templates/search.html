@@ -8,8 +8,9 @@
     <hr />
     <div class="col-md-12 col-sm-12 pull-left posttimeline">
       {% for result in results %}
-      <div class="panel panel-default">
-        <div class="btn-group pull-right postbtn">
+        {% if result.get_type == "PollTopic" %}
+        <div class="panel panel-default">
+         <div class="btn-group pull-right postbtn">
           <button
             type="button"
             class="dotbtn dropdown-toggle"
@@ -60,7 +61,18 @@
             </div>
           </div>
         </div>
-        {% endfor %}
+        {% endif %}
+        {% if result.get_type == "PastDebates" %}
+        <div class="col-sm-4">
+            <a href="#debateChat" seq="{% url 'pastChat' result.id %}" class="external_link">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">{{ result.topic }}</div></a>
+                    <div class="panel-body">Tags: {% for tag in result.get_tag_list %} <a onclick="return searchTag('{{tag}}')" href="">#{{tag}}</a> {% endfor %} <br> {{ result.user1 }}'s votes: {{ result.user1votes }} <br> {{ result.user2 }}'s votes: {{ result.user2votes }}</div>
+                    <div class="panel-footer">{{ result.user1 }} vs {{ result.user2 }}</div>
+                </div>
+          </div>
+        {% endif %}
+      {% endfor %}
       </div>
     </div>
   </div>

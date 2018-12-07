@@ -37,7 +37,7 @@
     <div class="user-poll-section">
         <div class="panel panel-default">
             <div class="panel-heading">
-                <strong>By : </strong>{{ owner }} <strong>Tags:  </strong>{% for tag in tags %} <a onclick="return searchTag('{{tag}}')" href="">#{{tag}}</a>{% endfor %}
+                <strong>By : </strong>{{ owner }} <strong>Tags:  </strong>{{tags}}
             </div>
             <div class="panel-body">
                 {% if voted %}
@@ -89,24 +89,15 @@
             </div>
             {% endif %}
 			{% for comment in CommentList %}
-				<div class="post-content">
-                    <div class="panel-default">
-                        <div class="panel-body">
-                            <div class="pull-left">
-                                <a href="#">
-                                    <img class="media-object img-circle" src="{{comment.user.account.img.url}}" width="35px"
-                                        height="35px" style="margin-right:15px; margin-left: 30px ; margin-top:-5px;">
-                                </a>
-                            </div>
-                            <h4><a href="#" style="text-decoration:none; "><strong>{{comment.user.username}}</strong></a></h4>
-                            <hr>
-                            <div class="post-content" style=" margin-left: 60px ;" >{{comment.text}}
-                                <br><small><small><a href="#" style="text-decoration:none; color:grey;"><i><i class="fa fa-clock-o"
-                                                    aria-hidden="true"></i> {{comment.date}}</i></a></small></small>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+				<div class="col-md-8">
+					<div class="panel panel-default">
+						<div class="media-body">
+							<img src="{{comment.user.account.img.url}}" style=" width: 6%; height: 10%;">
+							<span style="">{{comment.text}}</span>
+							<p>{{comment.user.username}} at {{comment.date}}</p>
+						</div>
+					</div>
+				</div>
 			{% endfor %}
 			<div>
 				<form method="post" enctype="multipart/form-data">

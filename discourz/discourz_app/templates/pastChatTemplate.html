@@ -1,0 +1,79 @@
+{% extends "generic.html" %}
+
+{% load static %}
+
+{% block css %}
+  <link rel="stylesheet" type="text/css" href="{% static 'css/debate.css' %}">
+{% endblock %}
+
+{% block js %}
+   <script src="{% static 'js/debate.js' %}"></script> 
+{% endblock %}
+
+{% block content %}
+    </div>
+
+    <div class="content">
+        <div class="right-header">
+            <div class="right-header-img">
+                <img src="{% static 'img/img/umass.jpg' %}">
+            </div>
+            <div class="right-header-detail">
+              <p>{{ topic }} Tags: {% for tag in tagList %}<a onclick="return searchTag('{{tag}}')" href="">#{{tag}}</a></p>{% endfor %}
+              <span>{{ user1 }} ({{user1votes}}) vs. {{ user2 }} ({{user2votes}})</span>
+            </div>
+            <div class="left-header-detail">
+                <p>{{ topic }} in {{category}}</p>
+                <span>{{ user1 }} ({{user1votes}}) vs. {{ user2 }} ({{user2votes}})</span>
+            </div>
+        </div>
+        <div class="right-header-contentChat">
+              <ul>
+              <li>
+                <div class="rightside-left-chat">
+                  <span><i class="fa fa-circle" aria-hidden="true"></i> UMass Students <small></small> </span><br><br>
+                  <p>It is our opinion that Umass Dining removed the to go cups to save money at the expense of the 
+				  student dining expierince</p>
+                </div>
+              </li>
+              <li>
+                <div class="rightside-right-chat">
+                  <span> <small></small> UMass Dining <i class="fa fa-circle" aria-hidden="true"></i></span><br><br>
+                  <p>We at UMass Dining would like to assure the students that this was not a cost saving measure but rather an enviromentally
+				  concious move designed to reduce waste at UMass.</p>
+                </div>
+              </li>
+              <li>
+                <div class="rightside-left-chat">
+                  <span><i class="fa fa-circle" aria-hidden="true"></i> UMass Students <small></small> </span><br><br>
+                  <p>The plastic cups are still at grab and go though which is likely where most of cups are used as well as 
+				  those cups being plastic still means that you actually eliminated the more enviromentally friendly option</p>
+                </div>
+              </li>
+              <li>
+                <div class="rightside-right-chat">
+                  <span> <small></small> UMass Dining <i class="fa fa-circle" aria-hidden="true"></i></span><br><br>
+                  <p>We had experts assess the enviromental impact of various Umass Dining policies and they determined that one of the least
+					intrusive things we could do to reduce our enviromental impact was to get rid of the cups as it would encourage people to
+					bring their own reusable cups.</p>
+                </div>
+              </li>
+            </ul>
+          </div>
+          <div class="right-chat-vote">
+              <p> Vote  {{ user1 }} or Vote {{user2}} </p>
+              <form method='post' enctype="multipart/form-data" nonvalidate>
+                <input type='text' name ='vote' value='1: {{user1}}' readonly> </input>
+                <input name="Vote {{user1}}" value='Vote!' type="Submit"></input>
+              </form>
+              <form method='post' enctype="multipart/form-data" nonvalidate>
+                <input type='text' name='vote' value='2: {{user2}}'> </input>
+                <input name="Vote {{user2}}" value='Vote!' type="Submit"></input>
+              </form>
+            </div>
+      
+
+      
+    </div>
+    
+{% endblock %}

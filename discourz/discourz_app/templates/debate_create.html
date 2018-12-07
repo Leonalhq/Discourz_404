@@ -1,0 +1,33 @@
+﻿{% extends "generic.html" %}
+{% load static %}
+{% block css %}
+<link rel="stylesheet" href="{% static 'css/poll_create.css' %}">
+{% endblock %}
+
+{% block content %}
+    <div class="content">
+            <div class="poll-header">
+                <h2>Creating a new Debate</h2>
+            </div>
+            
+                        
+            <br />
+            <form method="post" enctype="multipart/form-data" nonvalidate>
+
+            <div class="user-poll-section">
+                <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <strong>Enter Title: </strong> <input type='text' name='title'> </input> <br>
+                            <strong>Enter Category: </strong> <input type='text' name='category'> </input> <br>
+                            <strong>Enter Position: </strong> <input type='text' name='position'> </input> <br>
+                        </div>
+                        <div class="panel-footer">
+                            <input class="btn btn-success btn-sm" type="submit" value="Create Poll">
+                    </div>
+                </div>
+
+            </div>
+            </form>
+    </div>
+ 
+{% endblock %}

@@ -1,0 +1,130 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>SB Admin - Dashboard</title>
+
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+    <!-- jQuery library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+    <!-- Latest compiled JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+    <!-- Load an icon library -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <link rel="stylesheet" href="index.css">
+
+    <link rel="stylesheet" href="poll_home.css">
+
+    <link rel="stylesheet" href="font-awesome/css/font-awesome.min.css">
+
+    <script src="index.js"></script>
+
+    <script src="all.js"></script>
+
+  </head>
+
+  <body id="page-top">
+
+    <div class="navibar">
+      
+            <a class="navibar-left" href="#" onclick="toggleNav2()"><i class="fa fa-bars"></i> Menu</a>
+            <a class="navibar-center" href="#"><img src='logo/logo.png' width="130" height="22"></a>
+        <span class="navibar-login">
+            <a href="signup.html"><i class="fa fa-user-plus"></i> Sign up</a>
+            <span></span>
+            <a href="login.html"><i class="fa fa-sign-in"></i> Log in</a>
+        </span>
+          
+    </div>
+    
+    <div class="sidebar" id="mySidenav">
+
+        <a href="#home" seq="index.html" class="external_link"><i class="fa fa-fw fa-home"></i><span class="sidebar-text"> Home</span></a>
+        <a href="#discussion" seq="discussion.html" class="external_link"><i class="fa fa-users"></i><span class="sidebar-text"> Dicussion</span></a>
+        <a href="#debate" seq="debate.html" class="external_link"><i class="fa fa-comments-o"></i><span class="sidebar-text"> Debate</span></a>
+        <a href="#poll" seq="poll_home.html" class="external_link"><i class="fa fa-bar-chart"></i><span class="sidebar-text"> Poll</span></a>
+        <a seq="#contact"><i class="fa fa-fw fa-envelope"></i><span class="sidebar-text"> Contact</span></a>
+    </div>
+        
+    
+    <div class="content">
+
+        <div class="content-box">
+                <br/>
+                <h2>Poll</h2>
+                <br/>
+              
+                <ul class="nav nav-tabs">
+                  <li class="active"><a data-toggle="tab" href="#home">Most Recent</a></li>
+                  <li><a data-toggle="tab" href="#menu1">Most Popular</a></li>
+                  <li><a data-toggle="tab" href="#menu2">Most Agree</a></li>
+                  <li><a data-toggle="tab" href="#menu3">Most Disagree</a></li>
+                </ul>
+              
+                <div class="tab-content">
+                  
+                  <div id="home" class="tab-pane fade in active">
+                      <div class="row topic-row">
+                          <div class="col-sm-4">
+                            <a href="#poll" seq="poll.html" class="external_link">
+                                <div class="panel panel-primary">
+                                    <div class="panel-heading">who is the best player?</div>
+                                    <div class="panel-body"><img src="https://placehold.it/150x80?text=IMAGE" class="img-responsive" style="width:100%" alt="Image"></div>
+                                    <div class="panel-footer">by Adams Logan</div>
+                                </div>
+                            </a>
+                          </div>
+                          <div class="col-sm-4"> 
+                            <div class="panel panel-danger">
+                              <div class="panel-heading">which is the best dining commons at UMass?</div>
+                              <div class="panel-body"><img src="https://placehold.it/150x80?text=IMAGE" class="img-responsive" style="width:100%" alt="Image"></div>
+                              <div class="panel-footer">by Alex Sun</div>
+                            </div>
+                          </div>
+                          <div class="col-sm-4"> 
+                            <div class="panel panel-success">
+                              <div class="panel-heading">Should 326 open more sections?</div>
+                              <div class="panel-body"><img src="https://placehold.it/150x80?text=IMAGE" class="img-responsive" style="width:100%" alt="Image"></div>
+                              <div class="panel-footer">by John sun</div>
+                            </div>
+                          </div>
+                      </div>
+                  </div>
+                    
+
+                  <div id="menu1" class="tab-pane fade">
+                    <h3>Menu 1</h3>
+                    <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+                  </div>
+                  <div id="menu2" class="tab-pane fade">
+                    <h3>Menu 2</h3>
+                    <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam.</p>
+                  </div>
+                  <div id="menu3" class="tab-pane fade">
+                    <h3>Menu 3</h3>
+                    <p>Eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.</p>
+                  </div>
+                </div>
+
+        </div>
+            
+            
+    </div>
+  </body>
+
+</html>
+
+
+

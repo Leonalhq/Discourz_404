@@ -1,0 +1,126 @@
+{% extends "generic.html" %}
+
+{% load static %}
+
+{% block css %}
+  <link rel="stylesheet" type="text/css" href="{% static 'css/debate.css' %}">
+{% endblock %}
+
+{% block js %}
+   <script src="{% static 'js/debate.js' %}"></script> 
+{% endblock %}
+
+{% block content %}
+<head>
+    <meta charset="utf-8"/>
+    <title>Chat Room</title>
+</head>
+<div class="content" >
+        <div class="right-header">
+            <div class="right-header-img">
+                <img src="{% static 'img/img/logo discourz_blackBG.png' %}">
+            </div>
+            <div class="right-header-detail">
+              <p>{{ debateTopic.topic }} Tags: {% for tag in tagList %}<a onclick="return searchTag('{{tag}}')" href="">#{{tag}}</a></p>{% endfor %}
+              <span>{{ user1 }} ({{user1votes}}) vs. {{ user2 }} ({{user2votes}})</span>
+            </div>
+            <div class="left-header-detail">
+                <p>{{ topic }} in {{category}}</p>
+                <span>{{ user1 }} ({{user1votes}}) vs. {{ user2 }} ({{user2votes}})</span>
+            </div>
+        </div>
+        <div class="right-header-contentChat" >
+            <ul id="chat-log">
+            </ul>
+        </div>
+        <div class="col-md-12 right-chat-textbox">
+            <input id="chat-message-input" type="text"><a href="#"><i class="fa fa-arrow-right" aria-hidden="true" id="chat-message-submit"></i></a>
+		</div> 
+		{% for comment in commentList %}
+		<div class="post-content">
+        <div class="panel-default">
+            <div class="panel-body">
+                <div class="pull-left">
+                    <a href="#">
+                        <img class="media-object img-circle" src="{{comment.user.account.img.url}}" width="35px"
+                            height="35px" style="margin-right:15px; margin-left: 30px ; margin-top:-5px;">
+                    </a>
+                </div>
+                <h4><a href="#" style="text-decoration:none; "><strong>{{comment.user.username}}</strong></a></h4>
+                <hr>
+                <div class="post-content" style=" margin-left: 60px ;" >{{comment.text}}
+                    <br><small><small><a href="#" style="text-decoration:none; color:grey;"><i><i class="fa fa-clock-o"
+                        aria-hidden="true"></i> {{comment.date}}</i></a></small></small>
+                </div>
+            </div>
+        </div>
+    </div>
+	{% endfor %}
+    </div>
+<script>
+    var roomName = {{ room_name_json }};
+
+    var chatSocket = new WebSocket(
+        'ws://' + window.location.host +
+        '/ws/chat/' + roomName + '/');
+
+    chatSocket.onmessage = function(e) {
+        var data = JSON.parse(e.data);
+        var message = data['message'];
+		var sender = data['username'];
+		var avatarURL = data['avatar'];
+		var messageItem = document.createElement("li");
+		var messageNew = document.createElement("p");
+		var messageBubble = document.createElement("div");
+		var messageSpan = document.createElement("span");
+		var messageAvatar = document.createElement("img");
+		var avatarDiv = document.createElement("div");
+		avatarDiv.setAttribute("style","float: left;");
+		messageSpan.appendChild(avatarDiv);
+		messageBubble.appendChild(messageSpan);
+		messageSpan.appendChild(document.createTextNode(sender));
+		avatarDiv.appendChild(messageAvatar);
+		messageItem.appendChild(messageBubble);
+		messageNew.appendChild(document.createTextNode(message));
+		messageBubble.appendChild(document.createElement("br"))
+		messageBubble.appendChild(document.createElement("br"))
+		messageBubble.appendChild(messageNew);
+		if(sender == "{{user.username}}") messageBubble.setAttribute("class","rightside-left-chat");
+		else messageBubble.setAttribute("class","rightside-right-chat");
+		messageAvatar.setAttribute("class","media-object img-circle");
+		messageAvatar.setAttribute("src",avatarURL);
+		messageAvatar.setAttribute("width","25px");
+		messageAvatar.setAttribute("height","25px");
+		document.querySelector('#chat-log').appendChild(messageItem);
+    };
+
+    chatSocket.onclose = function(e) {
+        console.error('Chat socket closed unexpectedly');
+    };
+
+    document.querySelector('#chat-message-input').focus();
+    document.querySelector('#chat-message-input').onkeyup = function(e) {
+        if (e.keyCode === 13) {  // enter, return
+            document.querySelector('#chat-message-submit').click();
+        }
+    };
+
+    document.querySelector('#chat-message-submit').onclick = function(e) {
+        var messageInputDom = document.querySelector('#chat-message-input');
+        var message = messageInputDom.value;
+        chatSocket.send(JSON.stringify({
+            'message': message,
+			'debateId': "{{debateTopic.id}}",
+        }));
+
+        messageInputDom.value = '';
+    };
+</script>
+{% endblock %}
+<div class="content">
+	<div class="col-md-12 right-chat-textbox">
+		<textarea  id="chat-log" cols="100" rows="20"></textarea><br/>
+	</div>
+	<input id="chat-message-input" type="text" size="100"/><br/>
+	<input id="chat-message-submit" type="button" value="Send"/>
+</div>
