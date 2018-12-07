@@ -551,7 +551,6 @@ class SearchView(TemplateView):
         debateResults = PastDebates.objects.filter(tags__icontains=q)
         self.results = chain(debateResults, pollResults)
         self.key = q
-        print(debateResults[0].get_type)
         return super().get(request, *args, **kwargs)
 
     def get_context_data(self, **kwargs):
