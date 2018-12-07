@@ -26,13 +26,13 @@
                   
                   <div id="home" class="tab-pane fade in active">
                       <div class="row topic-row">
-                          {% for uuid, category, topic, initialUser, isOpen in viewDebates %}
+                          {% for uuid, tags, topic, initialUser, isOpen in viewDebates %}
                               {% if isOpen %}
                                   <div class="col-sm-4">
                                   <a href="#joinChat" seq="{% url 'joinChat' uuid %}" class="external_link">
                                       <div class="panel panel-primary">
                                           <div class="panel-heading">{{ topic }}</div>
-                                          <div class="panel-body">Category: {{ category }} <br></div>
+                                          <div class="panel-body">Tags: {% for tag in tags %} #{{ tag }} {% endfor %} <br></div>
                                           <div class="panel-footer">by {{ initialUser }}</div>
                                       </div>
                                   </a>
@@ -50,7 +50,7 @@
                                 <a href="#pastChat" seq="{% url 'pastChat' uuid %}" class="external_link">
                                     <div class="panel panel-primary">
                                         <div class="panel-heading">{{ topic }}</div>
-                                        <div class="panel-body">Category: {{ category }} <br> {{ user1 }}'s votes: {{ user1votes }} <br> {{ user2 }}'s votes: {{ user2votes }}</div>
+                                        <div class="panel-body">Tags: {% for tag in tags %} #{{ tag }} {% endfor %} <br> {{ user1 }}'s votes: {{ user1votes }} <br> {{ user2 }}'s votes: {{ user2votes }}</div>
                                         <div class="panel-footer">{{ user1 }} ({{ user1position }}) vs {{ user2 }} ({{ user2position }})</div>
                                     </div>
                                 </a>
