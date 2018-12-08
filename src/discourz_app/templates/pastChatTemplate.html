@@ -38,28 +38,29 @@
                 <input name="Vote {{user2}}" value='Vote!' type="Submit"></input>
               </form>
             </div>
+      <div class="col-md-8" > 
+        <ul id="comments">   
         {% for comment in CommentList %}
-				<div class="col-md-8">
+        <li>
 					<div class="panel panel-default">
 						<div class="media-body">
 							<img src="{{comment.user.account.img.url}}" style=" width: 6%; height: 10%;">
 							<span style="">{{comment.text}}</span>
 							<p>{{comment.user.username}} at {{comment.date}}</p>
 						</div>
-					</div>
-				</div>
+          </div>
+        </li>
       {% endfor %}
+      </ul>
+    </div>
       <div>
           <form method="post" enctype="multipart/form-data">
             {% csrf_token %}
             {{form.text}}
             <input type="text" name="PollId" maxlength="100" class="form-control" required id="id_PollId" value = "{{uuid}}" style="display: none">
-            <button type="submit" class="btn btn-success pull-right"> Share</button>
+            <button type="button" class="btn btn-success pull-right" onClick="return postComment('{{request.user.id}}','PastDebate')"> Share</button>
           </form>
         </div>
-      
-
-      
     </div>
 
     <script src="https://www.gstatic.com/firebasejs/5.6.0/firebase.js"></script>

@@ -8,6 +8,7 @@ from django.http import HttpResponseRedirect
 from django.http.response import JsonResponse
 from django.shortcuts import redirect
 from django.utils import timezone
+from datetime import datetime
 
 from django import forms
 from discourz.forms import SignUpForm
@@ -375,6 +376,8 @@ def waitLobby(request, id):
 
 @csrf_exempt
 def pastChat(request, uuid):
+    if Debates.objects.filter(id=uuid):
+        Debates.objects.filter(id=uuid).delete()
     if request.method == 'POST':
         vote_form = whichVote(request.POST, request.FILES)
         pastDebate = PastDebates.objects.get(id=uuid)
@@ -575,3 +578,17 @@ def room(request, uuid,):
         'commentList':commentList,
     }
     return render(request, 'chat/room.html', context)
+
+def post_comment(request):
+    comment = request.GET.get('comment',None)
+    userId = request.GET.get('user',None)
+    user = User.objects.filter(id=userId)[0]
+    Id = request.GET.get('id',None)
+    data_type = request.GET.get('data_type',None)
+    if(data_type == "PollTopic"): new_comment = Comment(user=user,Poll=(Poll.objects.filter(id=Id)[0]),text=comment)
+    else: new_comment = Comment(user=user,debate=PastDebates.objects.filter(id=Id)[0],text=comment)
+    date = datetime.now()
+    formatedDate = date.strftime("%b. %d, %Y, %I:%M %p")
+    new_comment.save()
+    print(datetime.now())
+    return JsonResponse({'username':user.username,'url':user.account.img.url,'date':formatedDate})

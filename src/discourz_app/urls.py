@@ -41,4 +41,5 @@ urlpatterns = [
     url(r'^search/$', SearchView.as_view(), name='search'),
     path('discussion', views.discussion, name='discussion'),
     url(r'^ajax/create_past_debate/$', views.create_past_debate, name='create_past_debate'),
+    url(r'^ajax/post_comment/$', views.post_comment, name='post_comment'),
 ]

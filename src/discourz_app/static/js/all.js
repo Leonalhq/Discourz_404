@@ -98,3 +98,41 @@ function searchTag(tag){
     document.getElementById("SearchBar").submit();
     return false;   
 }
+
+function postComment(user,type){
+    var message = document.getElementById("comment_input").value;
+    var id = document.getElementById("id_PollId").value;
+    $.ajax({
+        url: '/discourz/ajax/post_comment/',
+        data: {
+          'id': id,
+          'comment':message,
+          'data_type':type,
+          'user':user,
+        },
+        dataType: 'json',
+        success: function (data) {
+            //alert(new_date);
+          commentItem=document.getElementById("comments");
+          commentList = document.createElement("li");
+          commentPanel = document.createElement("div");
+          commentBody = document.createElement("div");
+          commentSpan = document.createElement("span");
+          commentInfo = document.createElement("p");
+          commentAvatar = document.createElement("img");
+          commentBody.appendChild(commentAvatar);
+          commentBody.appendChild(commentSpan);
+          commentBody.appendChild(commentInfo);
+          commentAvatar.setAttribute("style"," width: 6%; height: 10%;");
+          commentAvatar.setAttribute("src",data.url);
+          commentSpan.appendChild(document.createTextNode(message));
+          commentInfo.appendChild(document.createTextNode(data.username+" at "+data.date));
+          commentPanel.setAttribute("class","panel panel-default");
+          commentBody.setAttribute("class","media-body");
+          commentSpan.setAttribute("class","");
+          commentItem.appendChild(commentList);
+          commentList.appendChild(commentBody);
+        }
+      });
+
+}

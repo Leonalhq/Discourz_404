@@ -23,8 +23,8 @@ class CommentForm(forms.Form):
 
     def __init__(self, *args, **kwargs):
         super(CommentForm, self).__init__(*args, **kwargs)
-        self.fields['text'].widget.attrs.update({'class': 'form-control', 'placeholder': 'Tell people what you think'})
-        self.fields['PollId'].widget.attrs.update({'class': 'form-control',})
+        self.fields['text'].widget.attrs.update({'class': 'form-control', 'placeholder': 'Tell people what you think', 'id':'comment_input',})
+        self.fields['PollId'].widget.attrs.update({'class': 'form-control', 'id':'id_PollId',})
 
     class Meta:
         fields = ('text', 'PollId')
