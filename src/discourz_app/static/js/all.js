@@ -112,7 +112,6 @@ function postComment(user,type){
         },
         dataType: 'json',
         success: function (data) {
-            //alert(new_date);
           commentItem=document.getElementById("comments");
           commentList = document.createElement("li");
           commentPanel = document.createElement("div");

@@ -11,14 +11,14 @@
   <div class="content-box">
     <br />
     <span>
-      <h2>Poll</h2>
+      <h2>Discussion</h2>
     </span>
     <span>
       {% if request.user.is_authenticated %}
-      <a href="{% url 'poll_create' %}" class="btn btn-success btn-sm">
-        <span class="glyphicon glyphicon-plus"></span> create a new poll</a>
+      <a href="{% url 'discussion_create' %}" class="btn btn-success btn-sm">
+        <span class="glyphicon glyphicon-plus"></span> Create a new Discussion</a>
       {% else %}
-      <a href="#" class="btn btn-success btn-sm">Please log in to create a new poll</a>
+      <a href="#" class="btn btn-success btn-sm">Please log in to create a new discussion.</a>
       {% endif %}
     </span>
     <br /><br />
@@ -34,14 +34,14 @@
 
       <div id="home" class="tab-pane fade in active">
         <div class="row topic-row">
-          {% for uuid,title,img,owner,tags in polls %}
+          {% for uuid,title,img,owner,tags in discussions %}
           <div class="col-sm-4">
-            <a href="#poll" seq="{% url 'poll' uuid %}" class="external_link">
+            <a href='#poll' seq="{% url 'discussion' uuid %}" class="external_link">
               <div class="panel panel-primary">
                 <div class="panel-heading">{{ title }}</div></a>
                 <div class="panel-body"><img src="{{ img.url }}" class="topic_img" style="width:100%; height: 200px;"
                     alt="Image"></div>
-                    <div class="panel-footer">by {{ owner }} Tags: {% for tag in tags %} <a onclick="return searchTag('{{tag}}')" href="">#{{tag}}</a>{% endfor %}</div>
+                <div class="panel-footer">by {{ owner }} Tags: {% for tag in tags %} <a onclick="return searchTag('{{tag}}')" href="">#{{tag}}</a>{% endfor %}</div>
               </div>
           </div>
           {% endfor %}

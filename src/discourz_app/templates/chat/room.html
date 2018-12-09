@@ -3,7 +3,7 @@
 {% load static %}
 
 {% block css %}
-  <link rel="stylesheet" type="text/css" href="{% static 'css/debate.css' %}">
+  <link rel="stylesheet" type="text/css" href="{% static 'css/discussion.css' %}">
 {% endblock %}
 
 {% block js %}
@@ -16,53 +16,47 @@
     <title>Chat Room</title>
 </head>
 <div class="content" >
-        <div class="right-header">
-            <div class="right-header-img">
-                <img src="{% static 'img/img/logo discourz_blackBG.png' %}">
-            </div>
-            <div class="right-header-detail">
-              <p>{{ debateTopic.topic }} Tags: {% for tag in tagList %}<a onclick="return searchTag('{{tag}}')" href="">#{{tag}}</a></p>{% endfor %}
-              <span>{{ user1 }} ({{user1votes}}) vs. {{ user2 }} ({{user2votes}})</span>
-            </div>
-            <div class="left-header-detail">
-                <p>{{ topic }} in {{category}}</p>
-                <span>{{ user1 }} ({{user1votes}}) vs. {{ user2 }} ({{user2votes}})</span>
-            </div>
-        </div>
-        <div class="right-header-contentChat" >
-            <ul id="chat-log">
-            </ul>
-        </div>
-        <div class="col-md-12 right-chat-textbox">
-            <input id="chat-message-input" type="text"><a href="#"><i class="fa fa-arrow-right" aria-hidden="true" id="chat-message-submit"></i></a>
-		</div> 
-		{% for comment in commentList %}
-		<div class="post-content">
-        <div class="panel-default">
-            <div class="panel-body">
-                <div class="pull-left">
-                    <a href="#">
-                        <img class="media-object img-circle" src="{{comment.user.account.img.url}}" width="35px"
-                            height="35px" style="margin-right:15px; margin-left: 30px ; margin-top:-5px;">
-                    </a>
+    <div class="container main-section">
+        <div class="row">
+            <div class="right-header">
+                <div class="right-header-img">
+                    <img src="{{discussion.img.url}}">
                 </div>
-                <h4><a href="#" style="text-decoration:none; "><strong>{{comment.user.username}}</strong></a></h4>
-                <hr>
-                <div class="post-content" style=" margin-left: 60px ;" >{{comment.text}}
-                    <br><small><small><a href="#" style="text-decoration:none; color:grey;"><i><i class="fa fa-clock-o"
-                        aria-hidden="true"></i> {{comment.date}}</i></a></small></small>
+                <div class="right-header-detail">
+                <p>{{ discussion.title }} Tags: {% for tag in tagList %}<a onclick="return searchTag('{{tag}}')" href="">#{{tag}}</a></p>{% endfor %}
                 </div>
             </div>
-        </div>
+            <div class="right-header-contentChat" >
+                <ul id="chat-log">
+                    {% for message in chatList %}
+                    <li>
+                        {% if message.user == request.user %}
+                        <div class="rightside-left-chat">
+                        {% endif %}
+                        {% if message.user != request.user %}
+                        <div class="rightside-right-chat">
+                        {% endif %}
+                            <span><div style="float: left;"><img class="media-object img-circle" src="{{message.user.account.img.url}}" width="25px" height="25px"></div>{{message.user.username}}</span>
+                            <br><br><p>{{message.message}}</p>
+                        </div>
+                    </li>
+                    {% endfor %}
+                </ul>
+            </div>
+            <div class="col-md-12 right-chat-textbox">
+                <input id="chat-message-input" type="text"><a href="#"><i class="fa fa-arrow-right" aria-hidden="true" id="chat-message-submit"></i></a>
+            </div>
+             
+        </div>             
     </div>
-	{% endfor %}
-    </div>
+</div>
 <script>
     var roomName = {{ room_name_json }};
 
     var chatSocket = new WebSocket(
         'ws://' + window.location.host +
         '/ws/chat/' + roomName + '/');
+    var chatActive = true;
 
     chatSocket.onmessage = function(e) {
         var data = JSON.parse(e.data);
@@ -91,11 +85,12 @@
 		messageAvatar.setAttribute("src",avatarURL);
 		messageAvatar.setAttribute("width","25px");
 		messageAvatar.setAttribute("height","25px");
-		document.querySelector('#chat-log').appendChild(messageItem);
+        document.querySelector('#chat-log').appendChild(messageItem);
     };
 
     chatSocket.onclose = function(e) {
         console.error('Chat socket closed unexpectedly');
+        chatActive = false;
     };
 
     document.querySelector('#chat-message-input').focus();
@@ -110,10 +105,21 @@
         var message = messageInputDom.value;
         chatSocket.send(JSON.stringify({
             'message': message,
-			'debateId': "{{debateTopic.id}}",
+			'debateId': "{{discussion.id}}",
         }));
-
+        if(chatActive=true){
+            $.ajax({
+                url: '/discourz/ajax/new_message/',
+                data: {
+                    'id': "{{discussion.id}}",
+                    'message':message,
+                    'user':"{{request.user.username}}",
+                },
+                dataType: 'json',
+            });
         messageInputDom.value = '';
+        }
+
     };
 </script>
 {% endblock %}

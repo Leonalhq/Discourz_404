@@ -1,8 +1,10 @@
 from django.shortcuts import render
-from discourz_app.models import Account, PollTopic, Debates, PastDebates, Chat, Comment
-from discourz_app.forms import CreatePoll, CreateDebate, whichVote, CommentForm
+from discourz_app.models import Account, PollTopic, Debates, PastDebates, Chat, Comment, Discussion
+from discourz_app.forms import CreatePoll, CreateDebate, whichVote, CommentForm, CreateDiscussion
 from django.views.generic import TemplateView
+from django.utils.safestring import mark_safe
 from itertools import chain
+import json
 
 from django.http import HttpResponseRedirect
 from django.http.response import JsonResponse
@@ -50,13 +52,14 @@ def poll_home(request):
     images = [] 
     owners = []
     uuids = []
+    tags = []
     for topic in topics:
         titles.append(topic.title)
         images.append(topic.img)
         owners.append(topic.owner.user.username)
         uuids.append(topic.id)
-
-    polls = zip(uuids, titles, images, owners)
+        tags.append(topic.get_tag_list())
+    polls = zip(uuids, titles, images, owners, tags)
 
     context = {
         'polls': polls
@@ -259,8 +262,47 @@ def edit_profile(request, username):
 def aboutus(request):
     return render(request, 'about_us.html',)
 
-def discussion(request):
-    return render(request, 'discussion.html')
+def discussion_home(request):
+    topics = Discussion.objects.order_by("-date")
+    titles = []
+    images = [] 
+    owners = []
+    uuids = []
+    tags = []
+    for topic in topics:
+        titles.append(topic.title)
+        images.append(topic.img)
+        owners.append(topic.initial_user.username)
+        uuids.append(topic.id)
+        tags.append(topic.get_tag_list())
+
+    discussions = zip(uuids, titles, images, owners, tags)
+
+    context = {
+        'discussions': discussions
+    }
+
+
+    return render(request, 'discussion_home.html', context=context)
+
+def discussion_create(request):
+    if request.method == 'POST':
+        discussion_form = CreateDiscussion(request.POST, request.FILES)
+        title = discussion_form.data['title']
+        DiscussionTags = (((discussion_form.data['tags']).lower()).replace(" ","")).split("#")
+        user1 = request.user
+        newDiscussion = Discussion(title=title, isOpen=True, initial_user=user1)
+        newDiscussion.set_tags(DiscussionTags)
+        newDiscussion.img = request.FILES['dis_img']
+        newDiscussion.save()
+        uuid = str(newDiscussion.id)
+        return render(request, 'discussion_home.html')
+    else:
+        form = CreateDiscussion()
+        context={
+            'form':form,
+        }
+        return render(request, 'discussion_create.html',context=context)
 
 def debate(request):
     debates = Debates.objects.order_by('-date')[:10]
@@ -550,14 +592,16 @@ class SearchView(TemplateView):
 
     def get(self, request, *args, **kwargs):
         q = request.GET.get('q', '')
-        pollResults = PollTopic.objects.filter(tags__icontains=q)
-        debateResults = PastDebates.objects.filter(tags__icontains=q)
-        self.results = chain(debateResults, pollResults)
+        self.pollResults = PollTopic.objects.filter(tags__icontains=q)
+        self.debateResults = PastDebates.objects.filter(tags__icontains=q)
+        self.discussionResults = Discussion.objects.filter(tags__icontains=q)
+        self.results = chain(self.debateResults, self.pollResults, self.discussionResults)
         self.key = q
         return super().get(request, *args, **kwargs)
 
     def get_context_data(self, **kwargs):
-        return super().get_context_data(results=self.results, key = self.key, **kwargs)
+        return super().get_context_data(results=self.results, key = self.key,discussionResults=self.discussionResults,
+         debateResults=self.debateResults,pollResults=self.pollResults, **kwargs)
 
 def create_past_debate(request):
     debateId = request.GET.get('id', None)
@@ -568,14 +612,13 @@ def create_past_debate(request):
     return JsonResponse({'dummyResponse':debateId})
     
 def room(request, uuid,):
-    debateTopic = Debates.objects.filter(id=uuid)[0]
-    commentList = Comment.getDebateComments(debateTopic)
+    discussion = Discussion.objects.filter(id=uuid)[0]
     context = {
         'room_name_json': mark_safe(json.dumps(uuid)),
         'user':request.user,
-        'debateTopic':debateTopic,
-        'tagList':debateTopic.get_tag_list(),
-        'commentList':commentList,
+        'discussion':discussion,
+        'tagList':discussion.get_tag_list(),
+        'chatList':Chat.objects.filter(discussion=discussion),
     }
     return render(request, 'chat/room.html', context)
 
@@ -592,3 +635,12 @@ def post_comment(request):
     new_comment.save()
     print(datetime.now())
     return JsonResponse({'username':user.username,'url':user.account.img.url,'date':formatedDate})
+
+def new_message(request):
+    message = request.GET.get('message',None)
+    user = request.GET.get('user',None)
+    user= User.objects.filter(username=user)[0]
+    Id = request.GET.get('id',None)
+    new_message = Chat(user=user,message=message,discussion=Discussion.objects.filter(id=Id)[0])
+    new_message.save()
+    return JsonResponse({'dummyResponse':Id})

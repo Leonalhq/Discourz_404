@@ -2,13 +2,23 @@
 <link rel="stylesheet" href="{% static 'css/profile.css' %}" /> {% endblock %}
 {% block content %}
 <div class="content">
-  <div class="row ">
+  <div class="content_box ">
     <!-- /.col-md-12 -->
     <h1 class="text-center">Search results for "{{ key }}"</h1>
     <hr />
+    <ul class="nav nav-tabs">
+        <li class="active"><a data-toggle="tab" href="#home">All Content</a></li>
+        <li><a data-toggle="tab" href="#Polls">Polls</a></li>
+        <li><a data-toggle="tab" href="#Debates">Debates</a></li>
+        <li><a data-toggle="tab" href="#Discussions">Discussions</a></li>
+    </ul>
+      <br>
+    <div class="tab-content">
+    <div id="home" class="tab-pane fade in active"> 
     <div class="col-md-12 col-sm-12 pull-left posttimeline">
+        <h3>All Content</h3>
       {% for result in results %}
-        {% if result.get_type == "PollTopic" %}
+        {% if result.get_type == "PollTopic" or result.get_type == "Discussion" %}
         <div class="panel panel-default">
          <div class="btn-group pull-right postbtn">
           <button
@@ -61,18 +71,245 @@
             </div>
           </div>
         </div>
-        {% endif %}
-        {% if result.get_type == "PastDebates" %}
-        <div class="col-sm-4">
-            <a href="#debateChat" seq="{% url 'pastChat' result.id %}" class="external_link">
-                <div class="panel panel-primary">
-                    <div class="panel-heading">{{ result.topic }}</div></a>
-                    <div class="panel-body">Tags: {% for tag in result.get_tag_list %} <a onclick="return searchTag('{{tag}}')" href="">#{{tag}}</a> {% endfor %} <br> {{ result.user1 }}'s votes: {{ result.user1votes }} <br> {{ result.user2 }}'s votes: {{ result.user2votes }}</div>
-                    <div class="panel-footer">{{ result.user1 }} vs {{ result.user2 }}</div>
+      </div>
+      {% endif %}
+      {% if result.get_type == "PastDebates" %}
+              <div class="panel panel-default">
+               <div class="btn-group pull-right postbtn">
+                <button
+                  type="button"
+                  class="dotbtn dropdown-toggle"
+                  data-toggle="dropdown"
+                  aria-expanded="false"
+                >
+                  <span class="dots"></span>
+                </button>
+                <ul class="dropdown-menu pull-right" role="menu">
+                  <li>
+                    <a
+                      href="#debate"
+                      seq="{% url 'debateChat' result.id %}"
+                      class="external_link"
+                      style="text-decoration:none;"
+                      >More<br
+                    /></a>
+                  </li>
+                  <li><a href="javascript:void(0)">Report</a></li>
+                </ul>
+              </div>
+              <div class="col-md-12">
+                <div class="media">
+                  <div class="media-left">
+                    <a href="javascript:void(0)">
+                      <img src="{%static 'img/img/logo discourz_blackBG.png' %}" alt="" class="media-object" />
+                    </a>
+                  </div>
+                  <div class="media-body">
+                    <h4 class="media-heading">
+                      <a
+                        href="#debate"
+                        seq="{% url 'debateChat' result.id %}"
+                        class="external_link"
+                        style="text-decoration:none;"
+                        title="Debate"
+                        >{{ result.topic }}<br
+                      /></a>
+                      <p>
+                        {% for tag in result.get_tag_list %}
+                        <a onclick="return searchTag('{{tag}}')" href=""
+                          >#{{ tag }}</a
+                        >
+                        {% endfor %}
+                      </p>
+                      <small><i class="fa fa-clock-o"></i> {{ result.date }}</small>
+                    </h4>
+                  </div>
                 </div>
-          </div>
-        {% endif %}
+              </div>
+            </div>
+          {% endif %}
       {% endfor %}
+      </div>
+      </div>
+      <div id="Polls" class="tab-pane fade">
+        <h3>Polls</h3>
+        <div class="col-md-12 col-sm-12 pull-left posttimeline">
+            {% for result in pollResults %}
+              <div class="panel panel-default">
+               <div class="btn-group pull-right postbtn">
+                <button
+                  type="button"
+                  class="dotbtn dropdown-toggle"
+                  data-toggle="dropdown"
+                  aria-expanded="false"
+                >
+                  <span class="dots"></span>
+                </button>
+                <ul class="dropdown-menu pull-right" role="menu">
+                  <li>
+                    <a
+                      href="#poll"
+                      seq="{% url 'discussion' result.id %}"
+                      class="external_link"
+                      style="text-decoration:none;"
+                      >More<br
+                    /></a>
+                  </li>
+                  <li><a href="javascript:void(0)">Report</a></li>
+                </ul>
+              </div>
+              <div class="col-md-12">
+                <div class="media">
+                  <div class="media-left">
+                    <a href="javascript:void(0)">
+                      <img src="{{ result.img.url }}" alt="" class="media-object" />
+                    </a>
+                  </div>
+                  <div class="media-body">
+                    <h4 class="media-heading">
+                      <a
+                        href="#poll"
+                        seq="{% url 'poll' result.id %}"
+                        class="external_link"
+                        style="text-decoration:none;"
+                        title="Poll"
+                        >{{ result.title }}<br
+                      /></a>
+                      <p>
+                        {% for tag in result.get_tag_list %}
+                        <a onclick="return searchTag('{{tag}}')" href=""
+                          >#{{ tag }}</a
+                        >
+                        {% endfor %}
+                      </p>
+                      <small><i class="fa fa-clock-o"></i> {{ result.date }}</small>
+                    </h4>
+                  </div>
+                </div>
+              </div>
+            </div>
+            {% endfor %}
+          </div>
+      </div>
+      <div id="Debates" class="tab-pane fade">
+        <h3>Debates</h3>
+        <div class="col-md-12 col-sm-12 pull-left posttimeline">
+            {% for result in debateResults %}
+              <div class="panel panel-default">
+               <div class="btn-group pull-right postbtn">
+                <button
+                  type="button"
+                  class="dotbtn dropdown-toggle"
+                  data-toggle="dropdown"
+                  aria-expanded="false"
+                >
+                  <span class="dots"></span>
+                </button>
+                <ul class="dropdown-menu pull-right" role="menu">
+                  <li>
+                    <a
+                      href="#debate"
+                      seq="{% url 'debateChat' result.id %}"
+                      class="external_link"
+                      style="text-decoration:none;"
+                      >More<br
+                    /></a>
+                  </li>
+                  <li><a href="javascript:void(0)">Report</a></li>
+                </ul>
+              </div>
+              <div class="col-md-12">
+                <div class="media">
+                  <div class="media-left">
+                    <a href="javascript:void(0)">
+                      <img src="{% static 'img/img/logodiscourz_blackBG.png' %}" alt="" class="media-object" />
+                    </a>
+                  </div>
+                  <div class="media-body">
+                    <h4 class="media-heading">
+                      <a
+                        href="#debate"
+                        seq="{% url 'debateChat' result.id %}"
+                        class="external_link"
+                        style="text-decoration:none;"
+                        title="Debate"
+                        >{{ result.topic }}<br
+                      /></a>
+                      <p>
+                        {% for tag in result.get_tag_list %}
+                        <a onclick="return searchTag('{{tag}}')" href=""
+                          >#{{ tag }}</a
+                        >
+                        {% endfor %}
+                      </p>
+                      <small><i class="fa fa-clock-o"></i> {{ result.date }}</small>
+                    </h4>
+                  </div>
+                </div>
+              </div>
+            </div>
+            {% endfor %}
+          </div>
+      </div>
+      <div id="Discussions" class="tab-pane fade">
+          <div class="col-md-12 col-sm-12 pull-left posttimeline">
+              <h3>Discussions</h3>
+              {% for result in discussionResults %}
+                <div class="panel panel-default">
+                 <div class="btn-group pull-right postbtn">
+                  <button
+                    type="button"
+                    class="dotbtn dropdown-toggle"
+                    data-toggle="dropdown"
+                    aria-expanded="false"
+                  >
+                    <span class="dots"></span>
+                  </button>
+                  <ul class="dropdown-menu pull-right" role="menu">
+                    <li>
+                      <a
+                        href="#poll"
+                        seq="{% url 'discussion' result.id %}"
+                        class="external_link"
+                        style="text-decoration:none;"
+                        >More<br
+                      /></a>
+                    </li>
+                    <li><a href="javascript:void(0)">Report</a></li>
+                  </ul>
+                </div>
+                <div class="col-md-12">
+                  <div class="media">
+                    <div class="media-left">
+                      <a href="javascript:void(0)">
+                        <img src="{{ result.img.url }}" alt="" class="media-object" />
+                      </a>
+                    </div>
+                    <div class="media-body">
+                      <h4 class="media-heading">
+                        <a
+                          href="#poll"
+                          seq="{% url 'debateChat' result.id %}"
+                          class="external_link"
+                          style="text-decoration:none;"
+                          title="Poll"
+                          >{{ result.title }}<br
+                        /></a>
+                        <p>
+                          {% for tag in result.get_tag_list %}
+                          <a onclick="return searchTag('{{tag}}')" href=""
+                            >#{{ tag }}</a
+                          >
+                          {% endfor %}
+                        </p>
+                        <small><i class="fa fa-clock-o"></i> {{ result.date }}</small>
+                      </h4>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              {% endfor %}
+            </div>
       </div>
     </div>
   </div>

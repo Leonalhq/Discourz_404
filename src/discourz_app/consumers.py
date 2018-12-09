@@ -30,7 +30,6 @@ class ChatConsumer(WebsocketConsumer):
     def receive(self, text_data):
         text_data_json = json.loads(text_data)
         message = (text_data_json['message'])
-        #debateId = (text_data_json['debateId'])
 
         # Send message to room group
         async_to_sync(self.channel_layer.group_send)(
@@ -39,12 +38,9 @@ class ChatConsumer(WebsocketConsumer):
                 'type': 'chat_message',
                 'message': message,
                 'username': self.scope["user"].username,
-                #'debateId':debateId,
                 'userAvatar': self.scope["user"].account.img.url,
             }
         )
-        #newMessage = DebateMessage(message,self.scope["user"].id,datetime.now())
-        #newMessage.save()
 
     # Receive message from room group
     def chat_message(self, event):

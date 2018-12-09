@@ -1,0 +1,46 @@
+﻿{% extends "generic.html" %}
+{% load static %}
+{% block css %}
+<link rel="stylesheet" href="{% static 'css/poll_create.css' %}">
+{% endblock %}
+
+{% block js %}
+<script src="{% static 'js/poll_create.js' %}"></script>
+{% endblock %}
+
+{% block content %}
+    <div class="content">
+            <div class="poll-header">
+                <h2>New Discussion</h2>
+            </div>                     
+            <br />
+            <form method="post" enctype="multipart/form-data" nonvalidate>
+            {% csrf_token %}
+            {{ form.non_field_errors }}
+
+            <div class="user-poll-section">
+                <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <strong>Enter title: </strong>{{ form.title.errors }}{{ form.title }}
+                        </div>
+                        <div class="panel-body">
+							<div class="panel-body"> <span>Tags:</span> {{ form.tags }}</div>
+                            <span>select topic image: </span>
+
+                            <!--<input id="id_image" type="file" class="" name="poll_img">-->
+                            {{  form.dis_img.errors }}{{  form.dis_img }}
+                        
+                        </div>
+                        <div class="panel-footer">
+                                <input class="btn btn-success btn-sm" type="submit" value="Create Discussion">
+                            
+                        </div>
+                </div>
+
+            </div>
+            </form>
+    </div>
+ 
+{% endblock %}
+
+

@@ -79,3 +79,18 @@ class whichVote(forms.Form):
     def clean_title(self):
         data = self.cleaned_data['vote']
         return data
+
+class CreateDiscussion(forms.Form):
+    title = forms.CharField(max_length=200)
+    tags = forms.CharField(max_length=200)
+    dis_img = forms.ImageField()
+
+    def clean_title(self):
+        data = self.cleaned_data['title']
+        return data
+    def clean_category(self):
+        data = self.cleaned_data['category']
+        return data
+    def clean_dis_img(self):
+        data = self.cleaned_data['dis_img']
+        return data

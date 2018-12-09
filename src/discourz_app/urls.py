@@ -37,9 +37,11 @@ urlpatterns = [
     path('poll/<slug:uuid>/', views.poll, name='poll'),
     path('poll_voting/<slug:uuid>/<slug:vote>/', views.poll_voting, name='poll_voting'),
     path('poll_deleting/<slug:uuid>/', views.poll_deleting, name='poll_deleting'),
-    #path('poll', views.poll, name='poll'),
+    path('discussion/<slug:uuid>/', views.room, name='discussion'),
+    path('discussion_create', views.discussion_create, name='discussion_create'),
     url(r'^search/$', SearchView.as_view(), name='search'),
-    path('discussion', views.discussion, name='discussion'),
+    path('discussion_home', views.discussion_home, name='discussion_home'),
     url(r'^ajax/create_past_debate/$', views.create_past_debate, name='create_past_debate'),
     url(r'^ajax/post_comment/$', views.post_comment, name='post_comment'),
-]
+    url(r'^ajax/new_message/$', views.new_message, name='new_message'),
+]       
