@@ -540,7 +540,9 @@ def profile(request):
     bestOpt = []
     commentListList=[]
     commentNums = []
-    
+    colorsPoll = []
+    color = False
+
     for topic in topics:
         titles.append(topic.title)
         images.append(topic.img)
@@ -553,9 +555,52 @@ def profile(request):
         bestPerc.append(percentage)
         commentListList.append(Comment.getPollComments(topic))
         commentNums.append(len(Comment.objects.filter(Poll=topic)))
+        colorsPoll.append(color)
+        if color:
+            color = False
+        else: color=True
+        print(color)
         
+    polls = zip(uuids, titles, images, owners, voters, dates,bestOpt,bestPerc,commentListList,commentNums,colorsPoll)
 
-    polls = zip(uuids, titles, images, owners, voters, dates,bestOpt,bestPerc,commentListList,commentNums)
+    discussionTopics = Discussion.objects.filter(initial_user=account.user).order_by("-date")
+    num_own_discussion = discussionTopics.count()
+
+    pastDebates = PastDebates.objects.filter(user1=account).order_by("-date")[:10]
+    pastUuids = []
+    pastUser1 = []
+    pastUser2 = []
+    pastUser1Position = []
+    pastUser2Position = []
+    pastUser1Votes = []
+    pastUser2Votes = []
+    pastCategories = []
+    pastTopics = []
+    pastDates = []
+    colorsDebate = []
+    count_winning = 0
+    count_loss = 0
+    
+    for pastDebate in pastDebates:
+        pastUuids.append(pastDebate.id)
+        pastUser1.append(User.objects.filter(username=pastDebate.user1)[0])
+        pastUser2.append(User.objects.filter(username=pastDebate.user2)[0])        
+        pastUser1Votes.append(pastDebate.user1votes)
+        pastUser2Votes.append(pastDebate.user2votes)
+        if (pastDebate.user1votes > pastDebate.user2votes ):
+            count_winning+=1
+        else: count_loss+=1
+
+        pastCategories.append(pastDebate.get_tag_list())
+        pastTopics.append(pastDebate.topic)
+        pastDates.append(pastDebate.date)
+        colorsDebate.append(color)
+        if color:
+            color = False
+        else: color = True
+    
+    viewPast = zip(pastUuids, pastUser1, pastUser2, pastUser1Votes, pastUser2Votes, pastCategories, pastTopics,pastDates,colorsDebate)
+    
     context = {
         'username': account.user.username,
         'firstname': account.user.first_name,
@@ -565,9 +610,13 @@ def profile(request):
         'img' : account.img,
         'polls': polls,
         'num_own_polls': num_own_polls,
+        'num_own_discussion':num_own_discussion,
         'now': timezone.now(),
         'tagList':account.get_tag_list(),
         'form':CommentForm(),
+        'count_winning':count_winning,
+        'viewPast':viewPast,
+        'count_loss':count_loss,
     }
     if request.method == 'POST':
         form = CommentForm(request.POST)

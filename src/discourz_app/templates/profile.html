@@ -40,21 +40,21 @@
                         <li role="presentation">
                             <div class="text-center">
                                 <i class="fa fa-trophy fa-2x"></i>
-                                <h3 class="timer count-title count-number" data-to="100" data-speed="1500"></h3>
+                                <h3 class="timer count-title count-number" data-to={{count_winning}} data-speed="1500"></h3>
                                 <small>Won</small>
                             </div>
                         </li>
                         <li role="presentation">
                             <div class="text-center">
                                 <i class="fa fa-frown-o fa-2x"></i>
-                                <h3 class="timer count-title count-number" data-to="100" data-speed="1500"></h3>
+                                <h3 class="timer count-title count-number" data-to={{count_loss}} data-speed="1500"></h3>
                                 <small>Lost</small>
                             </div>
                         </li>
                         <li role="presentation">
                             <div class="text-center">
                                 <i class="fa fa-users fa-2x"></i>
-                                <h3 class="timer count-title count-number" data-to="100" data-speed="1500"></h3>
+                                <h3 class="timer count-title count-number" data-to={{num_own_discussion}} data-speed="1500"></h3>
                                 <small>Discussion</small>
                             </div>
                         </li>
@@ -103,8 +103,12 @@
             </div>
         </div>
         <div class="col-md-8 col-sm-12 pull-left posttimeline">
-            {% for uuid,title,img,owner,num_voter,date, bestOpt, bestPerc, commentList, commentNum in polls %}
-            <div class="panel panel-default">
+            {% for uuid,title,img,owner,num_voter,date, bestOpt, bestPerc, commentList, commentNum,color in polls %}
+            {% if color %}
+            <div class="panel panel-default"style="background:#e8e8e8;" >
+                {%else%}
+                            <div class="panel panel-default" style="background:#FFFFFF;">
+                {%endif%}
                 <div class="btn-group pull-right postbtn">
                     <button type="button" class="dotbtn dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
                         <span class="dots"></span> </button>
@@ -191,10 +195,14 @@
                         <button type="submit" class="btn btn-success pull-right"> Share</button>
                     </form>
                 </div>
-               
             </div>
             {% endfor %}
-            <div class="panel panel-default">
+            {% for uuid, user1, user2, user1votes, user2votes, tags, topic, date, color in viewPast %}
+                {% if color %}
+                <div class="panel panel-default" style="background:#e8e8e8;">
+                    {%else%}
+                    <div class="panel panel-default" style="background:#FFFFFF;">
+                        {%endif%}
                 <div class="btn-group pull-right postbtn">
                     <button type="button" class="dotbtn dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
                         <span class="dots"></span> </button>
@@ -208,28 +216,39 @@
                         <div class="media-left"> <a href="javascript:void(0)"> <img src="{{request.user.img.url}}" alt="" class="media-object">
                             </a> </div>
                         <div class="media-body">
-                            <h4 class="media-heading"><a href="" seq="" style="text-decoration:none;">Debate Title<br></a>
-                                <small><i class="fa fa-clock-o"></i>debate time</small>
+                            <h4 class="media-heading"><a href="#pastChat" seq="{% url 'pastChat' uuid %}" class="external_link" style="text-decoration:none;">Debate topic: {{ topic }}<br></a>
+                                <small><i class="fa fa-clock-o"></i> {{ date }}</small>
                             </h4>
-                            <p>You have recently debated with 6 people</p>
-                            <div class="memberblock"> <a href="" class="member"> <img src="https://bootdey.com/img/Content/avatar/avatar2.png"
-                                        alt="">
-                                    <div class="memmbername">Ajay Sriram</div>
-                                </a> <a href="" class="member"> <img src="https://bootdey.com/img/Content/avatar/avatar1.png"
-                                        alt="">
-                                    <div class="memmbername">Rajesh Sriram</div>
-                                </a> <a href="" class="member"> <img src="https://bootdey.com/img/Content/avatar/avatar1.png"
-                                        alt="">
-                                    <div class="memmbername">Manish Sriram</div>
-                                </a> <a href="" class="member"> <img src="https://bootdey.com/img/Content/avatar/avatar1.png"
-                                        alt="">
-                                    <div class="memmbername">Chandra Amin</div>
-                                </a> <a href="" class="member"> <img src="https://bootdey.com/img/Content/avatar/avatar1.png"
-                                        alt="">
-                                    <div class="memmbername">John Sriram</div>
-                                </a> <a href="" class="member"> <img src="https://bootdey.com/img/Content/avatar/avatar1.png"
-                                        alt="">
-                                    <div class="memmbername">Lincoln Sriram</div>
+                            <p>Tags: {% for tag in tags %} #{{ tag }} {% endfor %}</p>
+                            <div class="memberblock"> <a class="member">
+                                <figure>
+                                 <img src="{{user1.account.img.url}}"
+                                        alt="" >
+                                        <figcaption style="text-align:center">
+                                            {% if user1votes > user2votes %}
+                                            <h1> Winner </h1> 
+                                            {% else %}
+                                            <h1> Loser </h1>
+                                            {% endif%}
+                                        </figcaption>
+                                </figure>
+                                    <div class="memmbername">{{user1.username}} Score:{{user1votes}}</div>
+                                </a>
+                                <a href="" class="member2"> <h1 class="text-danger">VS</h1>
+                                    
+                                </a>
+                                 <a href="" class="member"> 
+                                     <figure>
+                                    <img src="{{user2.account.img.url}}" alt="">
+                                    <figcaption style="text-align:center">
+                                        {% if user1votes < user2votes %}
+                                        <h1> Winner </h1>
+                                        {% else %}
+                                        <h1> Loser </h1>
+                                        {% endif%}
+                                    </figcaption>
+                                </figure>
+                                    <div class="memmbername">{{user2.username}} Score:{{user2votes}}</div>
                                 </a>
                             </div>
                             <div class="clearfix"></div>
@@ -237,7 +256,7 @@
                     </div>
                 </div>
             </div>
-
+            {% endfor %}
         </div>
     </div>
 </div>

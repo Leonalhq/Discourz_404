@@ -198,6 +198,18 @@ body {
   position: relative;
   overflow: hidden;
 }
+
+.member2 {
+  width: 10%;
+  float: left;
+  margin: 2px 1% 2px 0;
+  padding: 3px;
+  padding-top: 20px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
 .memmbername {
   position: absolute;
   bottom: -30px;
