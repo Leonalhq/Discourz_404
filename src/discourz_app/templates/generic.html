@@ -51,12 +51,8 @@
   <body id="page-top">
     {% block topbar %}
     <div class="navibar">
-      <a class="navibar-left" href="#" onclick="toggleNav2()"
-        ><i class="fa fa-bars"></i> Menu</a
-      >
-      <a class="navibar-center" href="#"
-        ><img src="{% static 'img/logo/logo.png' %}" width="110" height="30"
-      /></a>
+      <a class="navibar-left" href="#" onclick="toggleNav2()"><i class="fa fa-bars"></i> Menu</a>
+      <a class="navibar-center" href="#"><img src="{% static 'img/logo/logo.png' %}" width="110" height="30"/></a>
       <span class="navibar-login">
         <form method="GET" id="SearchBar" action="{% url 'search' %}">
           <input
