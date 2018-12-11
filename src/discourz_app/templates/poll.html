@@ -90,13 +90,17 @@
             {% endif %}
 			{% for comment in CommentList %}
 				<div class="col-md-8">
+                    <ul id="comments">
+                    <li>
 					<div class="panel panel-default">
 						<div class="media-body">
 							<img src="{{comment.user.account.img.url}}" style=" width: 6%; height: 10%;">
 							<span style="">{{comment.text}}</span>
 							<p>{{comment.user.username}} at {{comment.date}}</p>
 						</div>
-					</div>
+                    </div>
+                    </li>
+                    </ul>
 				</div>
 			{% endfor %}
 			<div>
@@ -104,7 +108,7 @@
 					{% csrf_token %}
 					{{form.text}}
 					<input type="text" name="PollId" maxlength="100" class="form-control" required id="id_PollId" value = "{{uuid}}" style="display: none">
-					<button type="submit" class="btn btn-success pull-right"> Share</button>
+					<button type="button" class="btn btn-success pull-right" onClick="return postComment('{{request.user.id}}','PollTopic')"> Share</button>
 				</form>
 			</div>
         </div>
