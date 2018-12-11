@@ -60,7 +60,7 @@ class CreatePoll(forms.Form):
 
 class CreateDebate(forms.Form):
     title = forms.CharField(max_length=200)
-    category = forms.CharField(max_length=200)
+    category = forms.CharField(max_length=200,required=True)
     position = forms.CharField(max_length=200)
 
     def clean_title(self):

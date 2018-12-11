@@ -399,7 +399,8 @@ def debate_create(request):
     if request.method == 'POST':
         debate_form = CreateDebate(request.POST, request.FILES)
         title = debate_form.data['title']
-        DebateTags = (((debate_form.data['category']).lower()).replace(" ","")).split("#")
+        if debate_form.data['category'] != "": DebateTags = (((debate_form.data['category']).lower()).replace(" ","")).split("#")
+        else: DebateTags = ["General"]
         position = debate_form.data['position']
         user1 = request.user.username
         newDebate = Debates(topic=title, isOpen=True, initial_user=user1)
@@ -452,7 +453,6 @@ def pastChat(request, uuid):
         except PastDebates.DoesNotExist:
             raise Http404('Topic does not exist')
         
-        chatList = Chat.objects.filter(debates=pastDebate)
 
         usernames = []
         messages = []

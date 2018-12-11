@@ -131,6 +131,7 @@ function postComment(user,type){
           commentSpan.setAttribute("class","");
           commentItem.appendChild(commentList);
           commentList.appendChild(commentBody);
+          document.getElementById("comment_input").value = "";
         }
       });
 
