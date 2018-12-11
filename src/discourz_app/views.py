@@ -61,8 +61,26 @@ def poll_home(request):
         tags.append(topic.get_tag_list())
     polls = zip(uuids, titles, images, owners, tags)
 
+    topics_popular = PollTopic.objects.extra(select={'length':'Length(voters)'}).order_by('-length')[:10]
+    titles2 = []
+    images2 = [] 
+    owners2 = []
+    uuids2 = []
+    tags2 = []
+    #length2 = []
+    for topic in topics_popular:
+        titles2.append(topic.title)
+        images2.append(topic.img)
+        owners2.append(topic.owner.user.username)
+        uuids2.append(topic.id)
+        tags2.append(topic.get_tag_list())
+        #length2.append(len(topic.voters))
+    polls2 = zip(uuids2, titles2, images2, owners2, tags2)
+
+
     context = {
-        'polls': polls
+        'polls': polls,
+        'polls2': polls2
     }
 
     return render(request, 'poll_home.html', context=context)
