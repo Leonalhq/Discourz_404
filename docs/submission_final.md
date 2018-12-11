@@ -19,7 +19,7 @@ User Interface:
 
 The above image is the poll view of our application where you are able to vote on a poll you or another user has created. Above shows an example question with example answers showing the answer the user selected. The user is an admin, because they are able to delete the post, as shown on the bottom of the page. 
 
-![example image](discussion.png)
+![example image](imgs/discussion.png)
 The above image shows an example of an ongoing discussion between two users, j4yrad and EvilJared. This discussion is in real time and allows many users to participate at once. 
 
 Data Model:
