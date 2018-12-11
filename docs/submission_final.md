@@ -20,14 +20,34 @@ User Interface:
 The above image is the poll view of our application where you are able to vote on a poll you or another user has created. Above shows an example question with example answers showing the answer the user selected. The user is an admin, because they are able to delete the post, as shown on the bottom of the page. 
 
 ![example image](imgs/discussion.png)
+
 The above image shows an example of an ongoing discussion between two users, j4yrad and EvilJared. This discussion is in real time and allows many users to participate at once. 
 
-Data Model:
+![example image](imgs/login.png)
 
-#will send over when done####
+The above image shows an example of the login view of our application. You are able to enter your username and password and it logs you in. If you do not already have profile, there is a link to the sign up page.
+
+![example image](imgs/search.png)
+The above image shows an example of the search view. this allows users to search words and related posts come up in the results. You can filter between polls, debates, and discussions. 
+
+![example image](imgs/signup.png)
+The above image shows the sign up view. In this view, the user creates a username, password, enters their email, and creates a bio about themselves. This profile will be viewable to other users.
+
+![example image](imgs/pastpolls.png)
+The above image shows the view of the polls that can be sorted by most recent and most popular. The user can create a new poll or select a poll that has already been created. Clicking on the poll brings them to that view where they can vote on that poll. 
+
+![example image](imgs/profile.png)
+The above image shows the profile view of the application for a specific user. It shows their past polls,debates, and discussions and shows the number of polls and discussions the user has created. It also shows the number of debates the user has won or lost.
+
+![example image](imgs/profile2.png)
+The above image is also the profile view of the application, but it also shows what it looks like when someone wins a debate. It also shows tagged interests for the user.
+
+Data Model:
+![example image](imgs/data_model.png)
+
 
 URL Routes/Mappings:
-###ask about later###
+#############
 
 Authentication/Authorization:
 Users are authenticated with basic sign up and sign in parts of the application. The admin has more permissions than the regular user's. He is able to delete polls while regular users are not. If a user is an admin, they will have a different view on the poll view than a regular user because they will be able to delete polls while the regular users will not have this option.
