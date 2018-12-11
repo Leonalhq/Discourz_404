@@ -224,15 +224,6 @@ def poll(request, uuid):
         'tags': topic.get_tags(),
     }
 
-    if request.method == 'POST':
-        form = CommentForm(request.POST)
-        if form.is_valid():
-            comment = form.cleaned_data['text']
-            PollId = form.cleaned_data['PollId']
-            Poll = (PollTopic.objects.filter(id = PollId))[0]
-            newComment = Comment(text = comment, Poll = Poll, user = request.user)
-            newComment.save()
-            return redirect('poll',uuid)
 
     return render(request, 'poll.html', context=context)
 
@@ -646,7 +637,7 @@ def post_comment(request):
     user = User.objects.filter(id=userId)[0]
     Id = request.GET.get('id',None)
     data_type = request.GET.get('data_type',None)
-    if(data_type == "PollTopic"): new_comment = Comment(user=user,Poll=(Poll.objects.filter(id=Id)[0]),text=comment)
+    if(data_type == "PollTopic"): new_comment = Comment(user=user,Poll=(PollTopic.objects.filter(id=Id)[0]),text=comment)
     else: new_comment = Comment(user=user,debate=PastDebates.objects.filter(id=Id)[0],text=comment)
     date = datetime.now()
     formatedDate = date.strftime("%b. %d, %Y, %I:%M %p")
