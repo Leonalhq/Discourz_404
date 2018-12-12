@@ -66,11 +66,17 @@ this url maps to the about us page where a user can view the information about t
 this url maps to the profile page where a user can see their own information such as username, email address, bio, interests, and their polls, debates, and discussions
 
 /debate
+
 /waitLobby/<id>/
+
 /joinChat/<uuid>/
+
 /debateChat/<uuid>/
+
 /debate_create
+
 /pastChat/<uuid>
+
 /edit_profile/<slug:username>
 
 /poll_home -> poll_home.html
@@ -96,9 +102,13 @@ this url will allow a user to mark their vote, it will redirect to the poll.html
 this url will allow a user in the admins group to delete a poll
 
 /discussion_home
+
 r'^search/$'
+
 r'^ajax/create_past_debate/$'
+
 r'^ajax/post_comment/$'
+
 r'^ajax/new_message/$'
 
 
