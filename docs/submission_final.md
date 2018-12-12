@@ -54,6 +54,7 @@ The above image is also the profile view of the application, but it also shows w
 # URL Routes/Mappings:
 
 *Main*
+
 Discourz/ ->  index.html
 
 This URL maps to the homepage where a user can view hot poll topics, recent past debates, live debates, live discussion, and recent polls.
@@ -75,6 +76,7 @@ account/logout/ -> registration/login.html
 Signs out the user and direct to login page
 
 *Polls* 
+
 discourz/poll_home/ -> poll_home.html
 This URL maps to the homepage for polls where a user can either view most recent polls or most popular polls.  Also, this page contains a link to discourz/poll_create/
 
@@ -95,11 +97,13 @@ It allows authenticated users to see the poll’s details and votes on the poll.
 The ability to delete the poll is available for only authenticated admin users
 
 *About Us*
+
 discourz/aboutus/ -> about_us.html
 Routes to about us page. The page displays a brief description about the project and team members’ information.
 Permission: It allows to any users.
 
 *Profile*
+
 accounts/profile/ -> profile.html
 Routes to profile page. The profile page displays logged in user information such as email, username, bio, interested tags, number of created polls and discussion, number of time the user won and lost on debates, first name and last name. It shows polls and past debates that were created by the user. If the user clicks on a poll topic or a debate topic, it directs to each poll page and each debate page respectively. Moreover, it allows the user to add comments within each poll or debate.
 Permission: its content depends on logged in user.
@@ -109,6 +113,7 @@ Routes to edit profile page. Its content is pulled from the user model. The user
 Permission: it only allows logged in users to direct to the URL.
 
 *Debate*
+
 discourz/debate/ -> debate_home.html
 This URL maps to the homepage for debates where a user can view all the debates.  This page contains a link to discourz/debate_create.
 
@@ -137,6 +142,7 @@ This URL maps to the page where a user will join an existing debate to start the
 Permission: This page only allows to authenticated users
 
 *Discussion*
+
 discourz/discussion_home/ -> discussion_home.html
 This URL maps to the homepage for discussions where a user can view all the discussions.  This page contains a link to discourz/discussion_create.
 
