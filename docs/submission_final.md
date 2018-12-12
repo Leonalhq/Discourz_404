@@ -50,6 +50,10 @@ The above image is also the profile view of the application, but it also shows w
 - PollTopic model contains information of each created poll. It includes the poll's title in text field, the poll's options' in text field, each option's votes in text field, voters (Account model), image of the poll, created date, and tags.
 - Debate model contains information about each created debate, and is listed on the debate page for other users to interact with. We control whether the debate is open to new users with the isOpen boolean field. We have tags on the debate to indicate the different categories the debate falls under. We have the topic of the debate, and the initial user's position on the topic. Finally, we get the name of both users, and the date to order the objects correctly on the debates page. Much of this data is stored within the PastDebates model, which makes voting on the debate possible.
 - Discussion model is essentially the same as debates, except we don't store the joining users' names and we allow the user to post an image. In the discussion page, more than 1 other user can join a discussion as opposed to just 1 person for debates.
+- PastDebates model contains information of each ended debate which a user can vote to agree on either side.  It includes an id, 2 users who debated, number of votes for each user, created date, topic, and tags.
+- Chate model basically contains all messages from each discussion.
+- Comment model contains information of each comment.
+- VotedUsers model contains information of users who voted on each past debate.
 
 # URL Routes/Mappings:
 
