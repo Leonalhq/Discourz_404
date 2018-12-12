@@ -30,7 +30,7 @@ The above image shows an example of the login view of our application. You are a
 ![example image](imgs/search.png)
 The above image shows an example of the search view. this allows users to search words and related posts come up in the results. You can filter between polls, debates, and discussions. 
 
-![example image](imgs/signup.png)
+![example image](imgs/sign_up.png)
 The above image shows the sign up view. In this view, the user creates a username, password, enters their email, and creates a bio about themselves. This profile will be viewable to other users.
 
 ![example image](imgs/pastpolls.png)
@@ -45,6 +45,9 @@ The above image is also the profile view of the application, but it also shows w
 Data Model:
 ![example image](imgs/data_model.png)
 
+
+- Account model contains information of each user that signed up with our website.  It includes User field (username, password, email address), image field for a profile picture, test field for user's bio, text field for his/her interests, and integer fields to count how many times they win or lose debates
+- PollTopic model contains information of each created poll.  it includes the poll's title in text field, poll's options' in text field, each option's votes in text field, voters (Account model), image of the poll, created date, and tags
 
 URL Routes/Mappings:
 #############
