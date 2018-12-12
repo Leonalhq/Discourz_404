@@ -48,6 +48,8 @@ Data Model:
 
 - Account model contains information of each user that signed up with our website.  It includes User field (username, password, email address), image field for a profile picture, test field for user's bio, text field for his/her interests, and integer fields to count how many times they win or lose debates
 - PollTopic model contains information of each created poll.  it includes the poll's title in text field, poll's options' in text field, each option's votes in text field, voters (Account model), image of the poll, created date, and tags
+- Debate model contains information about each created debate, and is listed on the debate page for other users to join. We control whether the debate is open to new users with the isOpen boolean field. We have tags on the debate to indicate the different categories the debate falls in. We have the topic of the debate, and the initial user's position on the topic. Finally, we get the name of both users, and the date to order the objects correctly on the debates page. Much of this we store for the PastDebates model, which makes voting on the debate possible.
+- Discussion model is essentially the same as debates, except we don't store the joining users' names and we allow the user to post an image. In the discussion page, more than 1 other user can join a discussion as opposed to just 1 person for debates.
 
 URL Routes/Mappings:
 #############
