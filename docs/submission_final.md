@@ -52,7 +52,46 @@ Data Model:
 - Discussion model is essentially the same as debates, except we don't store the joining users' names and we allow the user to post an image. In the discussion page, more than 1 other user can join a discussion as opposed to just 1 person for debates.
 
 URL Routes/Mappings:
-#############
+/ -> index.html
+this url maps to the homepage where a user can view hot poll topics, recent past debates, live debates, live discussion, and recent polls
+
+/aboutus -> about_us.html
+this url maps to the about us page where a user can view the information about the website and developers
+
+/profile -> profile.html
+this url maps to the profile page where a user can see their own information such as username, email address, bio, interests, and their polls, debates, and discussions
+
+/debate
+/waitLobby/<id>/
+/joinChat/<uuid>/
+/debateChat/<uuid>/
+/debate_create
+/pastChat/<uuid>
+/edit_profile/<slug:username>
+
+/poll_home -> poll_home.html
+this url maps to the homepage for polls where a user can either view most recent polls or most popular polls.
+
+/poll_create -> poll_create.html
+this url maps to the page where a user can create a new poll
+
+/poll/<uuid>/ -> poll.html
+this url maps to the page where a user can vote on a specific poll
+
+*if the user is in the admins group, the user can delete the poll on this page
+
+/poll_voting/<uuid>/<vote>/
+this url will allow a user to mark their vote, it will redirect to the poll.html
+
+/poll_deleting/<uuid>/
+this url will allow a user in the admins group to delete a poll
+
+/discussion_home
+r'^search/$'
+r'^ajax/create_past_debate/$'
+r'^ajax/post_comment/$'
+r'^ajax/new_message/$'
+
 
 Authentication/Authorization:
 Users are authenticated with basic sign up and sign in parts of the application. The admin has more permissions than the regular user's. He is able to delete polls while regular users are not. If a user is an admin, they will have a different view on the poll view than a regular user because they will be able to delete polls while the regular users will not have this option.
