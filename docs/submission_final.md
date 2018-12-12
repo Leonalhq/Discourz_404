@@ -52,6 +52,7 @@ Data Model:
 - Discussion model is essentially the same as debates, except we don't store the joining users' names and we allow the user to post an image. In the discussion page, more than 1 other user can join a discussion as opposed to just 1 person for debates.
 
 URL Routes/Mappings:
+
 / -> index.html
 this url maps to the homepage where a user can view hot poll topics, recent past debates, live debates, live discussion, and recent polls
 
