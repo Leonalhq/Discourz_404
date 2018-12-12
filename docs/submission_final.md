@@ -53,63 +53,109 @@ Data Model:
 
 URL Routes/Mappings:
 
-/ -> index.html
+
+Main
+Discourz/ ->  index.html
 
 This URL maps to the homepage where a user can view hot poll topics, recent past debates, live debates, live discussion, and recent polls.
 
-/aboutus -> about_us.html
+Login and Sign Up
 
-This URL maps to the "about us" page where a user can view the information about the website and developers.
+accounts/login/ -> registration/login.html
 
-/profile -> profile.html
+Routes to our login page. If a user clicks on the login button, the user will be directed to this page.
+Permission: it allows to unauthenticated users.
 
-This URL maps to the profile page where a user can see their own information such as username, email address, bio, interests, and their polls, debates, and discussions.
+accounts/registration/ -> registration/registration.html
 
-/debate
+Routes to the registration page. A user will be directed to the page if the user clicks on sign up buttons which is displayed in both the navbar and the login page
+Permission: it allows to unauthenticated users.
 
-/waitLobby/<id>/
+account/logout/ -> registration/login.html
 
-/joinChat/<uuid>/
+Signs out the user and direct to login page
 
-/debateChat/<uuid>/
+Polls 
+discourz/poll_home/ -> poll_home.html
+This URL maps to the homepage for polls where a user can either view most recent polls or most popular polls.  Also, this page contains a link to discourz/poll_create/
 
-/debate_create
+Permission: 
+It allows to authenticated users to see “create a new poll” button.
+To create a new poll is available to authenticated users only.
 
-/pastChat/<uuid>
+discourz/poll_create/ -> poll_create.html
+Routes to create new poll page will ask a user to input a poll topic, tags, a number of options, option’s details, and an image. After creating the poll, it directs to the poll page.
 
-/edit_profile/<slug:username>
+Permission: it only allows to authenticated users to create a new poll
 
-/poll_home -> poll_home.html
+discourz/poll/<id>/ -> poll.html
+Routes to a poll. It shows the poll details such as an owner, tags, options to vote, and number of voted.  
+Permission: 
+It allows to unauthenticated users to see the poll’s detail but they are not allowed to vote on the poll.
+It allows authenticated users to see the poll’s details and votes on the poll.
+The ability to delete the poll is available for only authenticated admin users
 
-This URL maps to the homepage for polls where a user can either view most recent polls or most popular polls.
+About Us
+discourz/aboutus/ -> about_us.html
+Routes to about us page. The page displays a brief description about the project and team members’ information.
+Permission: It allows to any users.
 
-/poll_create -> poll_create.html
+Profile
+accounts/profile/ -> profile.html
+Routes to profile page. The profile page displays logged in user information such as email, username, bio, interested tags, number of created polls and discussion, number of time the user won and lost on debates, first name and last name. It shows polls and past debates that were created by the user. If the user clicks on a poll topic or a debate topic, it directs to each poll page and each debate page respectively. Moreover, it allows the user to add comments within each poll or debate.
+Permission: its content depends on logged in user.
 
-This URL maps to the page where a user can create a new poll.
+discourz/edit_profile/<username>/ -> edit_profile.html
+Routes to edit profile page. Its content is pulled from the user model. The user is allowed to edit his profile such as image, interested tags, email, bio , first name and last name.
+Permission: it only allows logged in users to direct to the URL.
 
-/poll/<uuid>/ -> poll.html
+Debate
+discourz/debate/ -> debate_home.html
+This URL maps to the homepage for debates where a user can view all the debates.  This page contains a link to discourz/debate_create.
 
-This URL maps to the page where a user can vote on a specific poll
+Permission: 
+It allows to authenticated users to see “create a new debate” button.
+Create a new debate is available to authenticated users only.
 
-*if the user is in the admins group, the user can delete the poll on this page*
 
-/poll_voting/<uuid>/<vote>/
+discourz/debate_create/ -> debate_create.html
+This URL maps to the page where a user can create a new debate.
 
-This URL will allow a user to mark their vote and it will redirect to the poll.html.
+Permission: it only allows to authenticated users to create a new debate
 
-/poll_deleting/<uuid>/
+discourz/pastChat/<id>/ -> discussion.html
+Routes to the past chat with a specific id of the chat.  A user can view the conversation between 2 users.  Also, a user can vote to agree with either one of them.
+Permission: it only allows authenticated users to vote
 
-This URL will allow a user in the admins group to delete a poll.
+discourz/waitLobby/<id>/ -> waitLobby.html
+This URL maps to the page where a user will wait for another user to join his/her debate.
 
-/discussion_home
+Permission: This page only allows to authenticated users
 
-r'^search/$'
+discourz/debateChat/<uuid> -> joinChat.html
+This URL maps to the page where a user will join an existing debate to start the debate.
 
-r'^ajax/create_past_debate/$'
+Permission: This page only allows to authenticated users
 
-r'^ajax/post_comment/$'
+Discussion
+discourz/discussion_home/ -> discussion_home.html
+This URL maps to the homepage for discussions where a user can view all the discussions.  This page contains a link to discourz/discussion_create.
 
-r'^ajax/new_message/$'
+Permission: 
+It allows to authenticated users to see “create a new discussion” button.
+Create a new discussion is available to authenticated users only.
+
+discourz/discussion_create/ -> discussion_create.html
+This URL maps to the page where a user can create a new discussion.
+
+Permission: it only allows authenticated users to create a new discussion
+
+
+discourz/discussion/<uuid>/ -> discussion.html
+This URL maps to the page where a user will join an existing discussion to start the discussion.
+
+Permission: This page only allows to authenticated users
+
 
 
 Authentication/Authorization:
