@@ -1,19 +1,19 @@
-Title:
+# Title:
 404-Name Not Found
 
-Subtitle:
+# Subtitle:
 Discourz
 
-Semester:
+# Semester:
 Fall 2018
 
-Overview:
+# Overview:
 Our team decided to create an application where you could have discussions, debates and polls about various topics with different users of the application. Users would be able to create their own profiles, their own debates, and their own polls that other users could interact with in real time. This is innovative because it makes the debate more interesting since it is in real time between two people. They can interact quickly for an unlimited amount of time until one of them ends a the debate. It is also innovative because it allows other users to give their opinion on who won the debate with a vote that is counted in real time. In order for the debate and discussion section to work the redits server must be used.  
 
-Team Members:
+# Team Members:
 Dhruv Khurana-khuranadhruv18, Panupong Leenawarat-Okrymus inc, Jared Pina-J4yrad, Prakrit Saetang-Number535, Patrick Conway-pjconway, Chen Xie-chen678
 
-User Interface:
+# User Interface:
 
 ![example image](imgs/poll.png)
 
@@ -42,7 +42,7 @@ The above image shows the profile view of the application for a specific user. I
 ![example image](imgs/profile2.png)
 The above image is also the profile view of the application, but it also shows what it looks like when someone wins a debate. It shows tagged interests for the user as well.
 
-Data Model:
+# Data Model:
 ![example image](imgs/data_model.png)
 
 
@@ -51,15 +51,14 @@ Data Model:
 - Debate model contains information about each created debate, and is listed on the debate page for other users to interact with. We control whether the debate is open to new users with the isOpen boolean field. We have tags on the debate to indicate the different categories the debate falls under. We have the topic of the debate, and the initial user's position on the topic. Finally, we get the name of both users, and the date to order the objects correctly on the debates page. Much of this data is stored within the PastDebates model, which makes voting on the debate possible.
 - Discussion model is essentially the same as debates, except we don't store the joining users' names and we allow the user to post an image. In the discussion page, more than 1 other user can join a discussion as opposed to just 1 person for debates.
 
-URL Routes/Mappings:
+# URL Routes/Mappings:
 
-
-Main
+*Main*
 Discourz/ ->  index.html
 
 This URL maps to the homepage where a user can view hot poll topics, recent past debates, live debates, live discussion, and recent polls.
 
-Login and Sign Up
+*Login and Sign Up*
 
 accounts/login/ -> registration/login.html
 
@@ -75,7 +74,7 @@ account/logout/ -> registration/login.html
 
 Signs out the user and direct to login page
 
-Polls 
+*Polls* 
 discourz/poll_home/ -> poll_home.html
 This URL maps to the homepage for polls where a user can either view most recent polls or most popular polls.  Also, this page contains a link to discourz/poll_create/
 
@@ -95,12 +94,12 @@ It allows to unauthenticated users to see the poll’s detail but they are not all
 It allows authenticated users to see the poll’s details and votes on the poll.
 The ability to delete the poll is available for only authenticated admin users
 
-About Us
+*About Us*
 discourz/aboutus/ -> about_us.html
 Routes to about us page. The page displays a brief description about the project and team members’ information.
 Permission: It allows to any users.
 
-Profile
+*Profile*
 accounts/profile/ -> profile.html
 Routes to profile page. The profile page displays logged in user information such as email, username, bio, interested tags, number of created polls and discussion, number of time the user won and lost on debates, first name and last name. It shows polls and past debates that were created by the user. If the user clicks on a poll topic or a debate topic, it directs to each poll page and each debate page respectively. Moreover, it allows the user to add comments within each poll or debate.
 Permission: its content depends on logged in user.
@@ -109,7 +108,7 @@ discourz/edit_profile/<username>/ -> edit_profile.html
 Routes to edit profile page. Its content is pulled from the user model. The user is allowed to edit his profile such as image, interested tags, email, bio , first name and last name.
 Permission: it only allows logged in users to direct to the URL.
 
-Debate
+*Debate*
 discourz/debate/ -> debate_home.html
 This URL maps to the homepage for debates where a user can view all the debates.  This page contains a link to discourz/debate_create.
 
@@ -137,7 +136,7 @@ This URL maps to the page where a user will join an existing debate to start the
 
 Permission: This page only allows to authenticated users
 
-Discussion
+*Discussion*
 discourz/discussion_home/ -> discussion_home.html
 This URL maps to the homepage for discussions where a user can view all the discussions.  This page contains a link to discourz/discussion_create.
 
@@ -157,12 +156,11 @@ This URL maps to the page where a user will join an existing discussion to start
 Permission: This page only allows to authenticated users
 
 
-
-Authentication/Authorization:
+# Authentication/Authorization:
 Users are authenticated with basic sign up and sign in parts of the application. The admin has more permissions than the regular users. He is able to delete polls, while regular users are not. If a user is an admin, they will have a different perception of the poll view than a regular user because they will be able to delete polls while the regular users will not have this option.
 
-Team Choice:
+# Team Choice:
 Our team choice was to include a real time aspect within our application. We wanted discussions and debates to be in real time to make it more interesting. The votes on who won the debate is also in real time. We had to add URL routes for the discussion, debates, comments, and search aspects of the application. 
 
-Conclusion:
+# Conclusion:
 Overall, our team had a very positive experience working on this project. It was good to get to know eachother's strengths and weaknesses and learn to work to each member's strengths. We learned about creating a user interface, data models, URL routing, and authentication of the user. Putting together all this knowledge, we now have a broad overview of web programming. The biggest challenge that we faced as a group was organizing times where we could meet up and work on the project. Since we had a large group (6 people), it was difficult to find a time where we could all meet. Other than this, we experienced some slight bugs along the way but they were easily fixable and only slightly impacted our progress negatively. I think one thing we would have liked to know before starting the project would have been that we should start our code as early as possible. We started doing this later in the semester in order to give ourselves plenty of tiem to make sure everything is perfect and it took a lot of pressure off of us.
