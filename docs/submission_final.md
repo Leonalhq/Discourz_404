@@ -54,12 +54,15 @@ Data Model:
 URL Routes/Mappings:
 
 / -> index.html
+
 this url maps to the homepage where a user can view hot poll topics, recent past debates, live debates, live discussion, and recent polls
 
 /aboutus -> about_us.html
+
 this url maps to the about us page where a user can view the information about the website and developers
 
 /profile -> profile.html
+
 this url maps to the profile page where a user can see their own information such as username, email address, bio, interests, and their polls, debates, and discussions
 
 /debate
@@ -71,20 +74,25 @@ this url maps to the profile page where a user can see their own information suc
 /edit_profile/<slug:username>
 
 /poll_home -> poll_home.html
+
 this url maps to the homepage for polls where a user can either view most recent polls or most popular polls.
 
 /poll_create -> poll_create.html
+
 this url maps to the page where a user can create a new poll
 
 /poll/<uuid>/ -> poll.html
+
 this url maps to the page where a user can vote on a specific poll
 
 *if the user is in the admins group, the user can delete the poll on this page
 
 /poll_voting/<uuid>/<vote>/
+
 this url will allow a user to mark their vote, it will redirect to the poll.html
 
 /poll_deleting/<uuid>/
+
 this url will allow a user in the admins group to delete a poll
 
 /discussion_home
